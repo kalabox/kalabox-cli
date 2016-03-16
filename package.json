@@ -32,10 +32,8 @@
   "dependencies": {
     "bluebird": "^2.9.3",
     "chalk": "~0.5.1",
-    "dmg": "^0.1.0",
     "dockerode": "^2.2.7",
-    "download": "^3.3.0",
-    "download-status": "^2.1.0",
+    "download": "^4.4.3",
     "fs-extra": "^0.18.2",
     "inquirer": "^0.8.3",
     "js-yaml": "^3.4.6",
