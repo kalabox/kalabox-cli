@@ -46,9 +46,8 @@ module.exports = function(kbox) {
     }
     // Return a url of an archive
     else {
-      var format = (process.platform === 'win32') ? 'zipball' : 'tarball';
       var branch = (!locked) ? config.url.dev : config.url.prod;
-      var url = [config.url.base, format, branch].join('/');
+      var url = [config.url.base, 'tarball', branch].join('/');
       return {
         url: url,
         path: config.url.path,
