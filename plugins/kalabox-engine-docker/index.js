@@ -76,7 +76,7 @@ module.exports = function(kbox) {
       }
 
       if (typeof appName === 'string') {
-        appName = appName.replace('-', '');
+        appName = appName.replace(/-/g, '');
       }
     })
 
