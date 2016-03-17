@@ -25,7 +25,7 @@ before-install() {
   # Add our key
   if [ $TRAVIS_PULL_REQUEST == "false" ] &&
     [ -z "$TRAVIS_TAG" ] &&
-    [ $TRAVIS_REPO_SLUG == "kalabox/kalabox" ] &&
+    [ $TRAVIS_REPO_SLUG == "kalabox/kalabox-cli" ] &&
     [ $TRAVIS_OS_NAME == "linux" ]; then
       openssl aes-256-cbc -K $encrypted_fbe4451c16b2_key -iv $encrypted_fbe4451c16b2_iv -in ci/travis.id_rsa.enc -out $HOME/.ssh/travis.id_rsa -d
   fi
@@ -125,7 +125,7 @@ after-success() {
   # 5. Is on linux
   if [ $TRAVIS_PULL_REQUEST == "false" ] &&
     [ ! -z "$TRAVIS_TAG" ] &&
-    [ $TRAVIS_REPO_SLUG == "kalabox/kalabox" ] &&
+    [ $TRAVIS_REPO_SLUG == "kalabox/kalabox-cli" ] &&
     [ $TRAVIS_OS_NAME == "linux" ]; then
 
     # DEPLOY API DOCS to API.KALABOX.ME
