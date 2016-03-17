@@ -23,7 +23,6 @@ if [ -f "/user/.ssh/$KALABOX_SSH_KEY" ]; then
   cp -f /user/.ssh/$KALABOX_SSH_KEY $HOME/.ssh/$KALABOX_SSH_KEY
   chmod 600 $HOME/.ssh/$KALABOX_SSH_KEY
   chown -Rf $KALABOX_UID:$KALABOX_UID $HOME/.ssh
-  ls -lsa $HOME/.ssh
 fi
 
 if [ -f "/${WEBROOT}/.stfolder" ]; then
