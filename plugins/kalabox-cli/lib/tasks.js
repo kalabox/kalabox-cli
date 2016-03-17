@@ -118,18 +118,27 @@ module.exports = function(kbox) {
                     payload.shift();
                   }
 
-                  // Set the payload to be the command
+                  // Set the payload to be the command,
                   options.cmd = payload;
 
                   // If we have pre cmd opts then unshift them
+                  // @todo: handle pre cmd opt array?
                   if (options.precmdopts) {
                     options.cmd.unshift(options.precmdopts);
                   }
 
                   // If we have posrt cmd opts then unshift them
+                  // @todo: handle post cmd opt array?
                   if (options.postcmdopts) {
                     options.cmd.push(options.postcmdopts);
                   }
+
+                  // if an arg has spaces lets assume we need to wrap it in
+                  // quotes
+                  // @todo: this is probably a bad assumption
+                  options.cmd = _.map(options.cmd, function(arg) {
+                    return (_.includes(arg, ' ')) ? '"' + arg + '"' : arg;
+                  });
 
                   // Get teh run definition objecti
                   var runDef = getRun(options);
