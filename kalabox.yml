@@ -43,7 +43,7 @@
 #
 #   globalPlugins:
 #     - kalabox-core
-#     - kalabox-cli
+#     - kalabox-cmd
 #     - kalabox-services-kalabox
 #     - kalabox-syncthing
 #     - kalabox-pantheon
@@ -51,7 +51,7 @@
 #
 globalPlugins:
   - kalabox-core
-  - kalabox-cli
+  - kalabox-cmd
   - kalabox-services-kalabox
   - kalabox-sharing
   - kalabox-pantheon
