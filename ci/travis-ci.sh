@@ -184,7 +184,7 @@ before-deploy() {
   # THis is a production release!
   if [ $TRAVIS_PULL_REQUEST == "false" ] &&
     [ ! -z "$TRAVIS_TAG" ] &&
-    [ $TRAVIS_REPO_SLUG == "kalabox/kalabox" ]; then
+    [ $TRAVIS_REPO_SLUG == "kalabox/kalabox-cli" ]; then
 
     # Do a production build
     grunt pkg>/dev/null
