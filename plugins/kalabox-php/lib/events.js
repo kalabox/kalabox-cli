@@ -3,6 +3,9 @@
 
 module.exports = function(kbox) {
 
+  // Node modules
+  var path = require('path');
+
   // NPM modules
   var _ = require('lodash');
 
@@ -33,6 +36,13 @@ module.exports = function(kbox) {
         config.pluginconfig.php.framework = 'wordpress';
         config.pluginconfig.php.version = '4';
       }
+
+      // Get relevant config options
+      var prod = kbox.util.yaml.toJson(path.join(__dirname, 'config.yml'));
+      var locked = kbox.core.deps.get('globalConfig').locked;
+
+      // Set a version
+      config.version = (!locked) ? prod.url.dev : prod.url.prod;
 
     }
 

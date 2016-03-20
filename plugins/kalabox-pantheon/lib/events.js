@@ -32,6 +32,9 @@ module.exports = function(kbox, pantheon) {
       // Expose the correct pantheon img version
       pantheonConfig.images = (!locked) ? 'dev' : prod.url.prod;
 
+      // Set a version
+      config.version = (!locked) ? prod.url.dev : prod.url.prod;
+
       // Get site info
       return pantheon.getSites()
 
