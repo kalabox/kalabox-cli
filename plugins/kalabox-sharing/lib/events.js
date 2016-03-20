@@ -53,7 +53,6 @@ module.exports = function(kbox) {
         '.DS_Store*',
         '._*',
         '.sass-cache',
-        'Icon',
         'Thumbs.db',
         'ehthumbs.db'
       ]
