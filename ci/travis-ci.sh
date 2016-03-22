@@ -27,7 +27,7 @@ before-install() {
     [ -z "$TRAVIS_TAG" ] &&
     [ $TRAVIS_REPO_SLUG == "kalabox/kalabox-cli" ] &&
     [ $TRAVIS_OS_NAME == "linux" ]; then
-      openssl aes-256-cbc -K $encrypted_fbe4451c16b2_key -iv $encrypted_fbe4451c16b2_iv -in ci/travis.id_rsa.enc -out $HOME/.ssh/travis.id_rsa -d
+      openssl aes-256-cbc -K $encrypted_46abdd373e2c_key -iv $encrypted_46abdd373e2c_iv -in ci/travis.id_rsa.enc -out $HOME/.ssh/travis.id_rsa -d
   fi
 
   # Upgrade node per OS and set OS JX env
