@@ -175,22 +175,9 @@ module.exports = function(kbox) {
       throw new VError(err, 'Failure initializing provider!');
     })
 
-    // Get and set the engineConfig
-    .tap(function(provider) {
-
-      // Get the engine config
-      return provider.engineConfig()
-
-      // Set the engine config
-      .then(function(engineConfig) {
-        kbox.core.deps.remove('engineConfig');
-        kbox.core.deps.register('engineConfig', engineConfig);
-      });
-
-    })
-
     // Return the provider module
     .tap(function(provider) {
+      kbox.core.deps.register('providerModule', provider);
       return provider;
     });
 

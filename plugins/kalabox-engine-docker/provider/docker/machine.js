@@ -113,21 +113,6 @@ module.exports = function(kbox) {
   };
 
   /*
-   * Return machine's IP address.
-   */
-  var getIp = function() {
-
-    // Inspect our machine so we can get ips
-    return inspect()
-
-    // Build our config
-    .then(function(data) {
-      return data.Driver.IPAddress || '10.13.37.100';
-    });
-
-  };
-
-  /*
    * Return true if machine is up.
    */
   var isUp = function() {
@@ -192,6 +177,45 @@ module.exports = function(kbox) {
   };
 
   /*
+   * Return machine's IP address.
+   */
+  var getIp = function() {
+
+    // Inspect our machine so we can get ips
+    return inspect()
+
+    // Try to get config from inspect data
+    .then(function(data) {
+      return data.Driver.IPAddress;
+    })
+
+    // If our inspect data is blank try to query for it
+    // but only if the machine is up
+    .then(function(ip) {
+      if (_.isEmpty(ip)) {
+        return isUp()
+        .then(function(up) {
+          return (up) ? shProvider(['ip'], {silent: true}) : ip;
+        });
+      }
+      else {
+        return ip;
+      }
+    })
+
+    // If our query data is blank make assumptions
+    .then(function(ip) {
+      return (_.isEmpty(ip)) ? '10.13.37.100' : ip;
+    })
+
+    // Cleanliness is next to godliness
+    .then(function(ip) {
+      return _.trim(ip);
+    });
+
+  };
+
+  /*
    * Check to see if we have a Kalabox2 VM
    */
   var vmExists = function() {
@@ -233,20 +257,29 @@ module.exports = function(kbox) {
     // Inspect our machine so we can get some dataz
     return inspect()
 
-    // Build our config
+    // Get our config
     .then(function(data) {
+
+      // Get our auth options for later
       var auth = data.HostOptions.AuthOptions;
-      var ip = data.Driver.IPAddress;
-      return {
-        protocol: 'https',
-        host: ip || '10.13.37.100',
-        machine: 'Kalabox2',
-        port: '2376',
-        certDir: auth.CertDir,
-        ca: fs.readFileSync(auth.CaCertPath),
-        cert: fs.readFileSync(auth.ClientCertPath),
-        key: fs.readFileSync(auth.ClientKeyPath)
-      };
+
+      // Get our IP
+      return getIp()
+
+      // Build the CONFIG
+      .then(function(ip) {
+        return {
+          protocol: 'https',
+          host: ip,
+          machine: 'Kalabox2',
+          port: '2376',
+          certDir: auth.CertDir,
+          ca: fs.readFileSync(auth.CaCertPath),
+          cert: fs.readFileSync(auth.ClientCertPath),
+          key: fs.readFileSync(auth.ClientKeyPath)
+        };
+      });
+
     });
 
   };
