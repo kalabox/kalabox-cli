@@ -120,9 +120,36 @@ module.exports = function(kbox) {
     // Inspect our machine so we can get ips
     return inspect()
 
-    // Build our config
+    // Try to get config from inspect data
     .then(function(data) {
-      return data.Driver.IPAddress || '10.13.37.100';
+      console.log('inspect');
+      console.log(data.Driver.IPAddress);
+      return data.Driver.IPAddress;
+    })
+
+    // If our inspect data is blank try to query for it
+    .then(function(ip) {
+      if (_.isEmpty(ip)) {
+        return shProvider(['ip'], {silent: true});
+      }
+      else {
+        return ip;
+      }
+    })
+
+    // If our query data is blank make assumptions
+    .then(function(ip) {
+      if (!_.isEmpty(ip)) {
+        return '10.13.37.100';
+      }
+      else {
+        return ip;
+      }
+    })
+
+    // Cleanliness is next to godliness
+    .then(function(ip) {
+      return _.trim(ip);
     });
 
   };
