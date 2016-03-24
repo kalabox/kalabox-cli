@@ -205,7 +205,7 @@ module.exports = function(kbox) {
 
     // If our query data is blank make assumptions
     .then(function(ip) {
-      return (!_.isEmpty(ip)) ? '10.13.37.100' : ip;
+      return (_.isEmpty(ip)) ? '10.13.37.100' : ip;
     })
 
     // Cleanliness is next to godliness
