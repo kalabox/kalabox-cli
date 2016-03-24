@@ -260,20 +260,29 @@ module.exports = function(kbox) {
     // Inspect our machine so we can get some dataz
     return inspect()
 
-    // Build our config
+    // Get our config
     .then(function(data) {
+
+      // Get our auth options for later
       var auth = data.HostOptions.AuthOptions;
-      var ip = data.Driver.IPAddress;
-      return {
-        protocol: 'https',
-        host: ip || '10.13.37.100',
-        machine: 'Kalabox2',
-        port: '2376',
-        certDir: auth.CertDir,
-        ca: fs.readFileSync(auth.CaCertPath),
-        cert: fs.readFileSync(auth.ClientCertPath),
-        key: fs.readFileSync(auth.ClientKeyPath)
-      };
+
+      // Get our IP
+      return getIp()
+
+      // Build the CONFIG
+      .then(function(ip) {
+        return {
+          protocol: 'https',
+          host: ip,
+          machine: 'Kalabox2',
+          port: '2376',
+          certDir: auth.CertDir,
+          ca: fs.readFileSync(auth.CaCertPath),
+          cert: fs.readFileSync(auth.ClientCertPath),
+          key: fs.readFileSync(auth.ClientKeyPath)
+        };
+      });
+
     });
 
   };
