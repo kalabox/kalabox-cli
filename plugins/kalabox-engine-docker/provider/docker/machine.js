@@ -113,48 +113,6 @@ module.exports = function(kbox) {
   };
 
   /*
-   * Return machine's IP address.
-   */
-  var getIp = function() {
-
-    // Inspect our machine so we can get ips
-    return inspect()
-
-    // Try to get config from inspect data
-    .then(function(data) {
-      console.log('inspect');
-      console.log(data.Driver.IPAddress);
-      return data.Driver.IPAddress;
-    })
-
-    // If our inspect data is blank try to query for it
-    .then(function(ip) {
-      if (_.isEmpty(ip)) {
-        return shProvider(['ip'], {silent: true});
-      }
-      else {
-        return ip;
-      }
-    })
-
-    // If our query data is blank make assumptions
-    .then(function(ip) {
-      if (!_.isEmpty(ip)) {
-        return '10.13.37.100';
-      }
-      else {
-        return ip;
-      }
-    })
-
-    // Cleanliness is next to godliness
-    .then(function(ip) {
-      return _.trim(ip);
-    });
-
-  };
-
-  /*
    * Return true if machine is up.
    */
   var isUp = function() {
@@ -214,6 +172,45 @@ module.exports = function(kbox) {
     // @todo: better checks here?
     .catch(function(/*err*/) {
       return {};
+    });
+
+  };
+
+  /*
+   * Return machine's IP address.
+   */
+  var getIp = function() {
+
+    // Inspect our machine so we can get ips
+    return inspect()
+
+    // Try to get config from inspect data
+    .then(function(data) {
+      return data.Driver.IPAddress;
+    })
+
+    // If our inspect data is blank try to query for it
+    // but only if the machine is up
+    .then(function(ip) {
+      if (_.isEmpty(ip)) {
+        return isUp()
+        .then(function(up) {
+          return (up) ? shProvider(['ip'], {silent: true}) : ip;
+        });
+      }
+      else {
+        return ip;
+      }
+    })
+
+    // If our query data is blank make assumptions
+    .then(function(ip) {
+      return (!_.isEmpty(ip)) ? '10.13.37.100' : ip;
+    })
+
+    // Cleanliness is next to godliness
+    .then(function(ip) {
+      return _.trim(ip);
     });
 
   };
