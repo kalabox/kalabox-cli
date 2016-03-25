@@ -14,15 +14,19 @@ module.exports = function(kbox) {
 
   /*
    * Add some other important things to our kalabox.yml before
-   * creating it
+   * configin it
    */
-  events.on('pre-create-configure', function(config) {
+  events.on('pre-create-configure', function(data) {
+
+    // Grab the config from teh data
+    var config = data.config;
+    var results = data.results;
 
     // Only run if this is a php app
     if (config.type === 'php') {
 
       // Get the created app type
-      var created = kbox.core.deps.get('argv').payload.pop();
+      var created = results._type;
 
       // Get the framework and version in various ways
       // For drupal
