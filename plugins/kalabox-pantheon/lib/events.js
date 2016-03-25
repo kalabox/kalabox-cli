@@ -16,7 +16,10 @@ module.exports = function(kbox, pantheon) {
    * Add some other important things to our kalabox.yml before
    * creating it
    */
-  events.on('pre-create-configure', function(config) {
+  events.on('pre-create-configure', function(data) {
+
+    // Grab the config from teh data
+    var config = data.config;
 
     // Only run on Pantheon apps
     if (config.type === 'pantheon') {
@@ -80,13 +83,16 @@ module.exports = function(kbox, pantheon) {
   /*
    * Make sure our pantheon SSH keys are set up
    */
-  events.on('post-create-configure', function(app) {
+  events.on('post-create-configure', function(data) {
 
-    if (app.type === 'pantheon') {
+    // Grab the config from teh data
+    var config = data.config;
+
+    if (config.type === 'pantheon') {
 
       // Set the correct session
       // @todo: it feels weird to have to do this again
-      var account = app.pluginconfig.pantheon.email;
+      var account = config.pluginconfig.pantheon.email;
       pantheon.setSession(account, pantheon.getSessionFile(account));
 
       // Make sure we have SSH keys that can communciate with pantheon
