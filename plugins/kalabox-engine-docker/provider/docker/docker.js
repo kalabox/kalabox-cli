@@ -445,7 +445,28 @@ module.exports = function(kbox) {
 
   };
 
+  /*
+   * Returns a stream of docker events.
+   */
+  var events = function() {
+
+    // Get docker instance.
+    return dockerInstance()
+    // Get stream of docker events.
+    .then(function(dockerInstance) {
+      return Promise.fromNode(function(cb) {
+        dockerInstance.getEvents(cb);
+      });
+    })
+    // Wrap errors.
+    .catch(function(err) {
+      throw new VError(err, 'Error listening to docker events.');
+    });
+
+  };
+
   return {
+    events: events,
     findContainer: findContainer,
     findContainerThrows: findContainerThrows,
     inspect: inspect,
