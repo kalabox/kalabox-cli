@@ -33,12 +33,27 @@ module.exports = function(kbox) {
       if (_.includes(created, 'drupal')) {
         config.pluginconfig.php.framework = 'drupal';
         config.pluginconfig.php.version = created.replace('drupal', '');
+        config.pluginconfig.php.image = [
+          config.pluginconfig.php.framework,
+          config.pluginconfig.php.version
+        ].join(':');
       }
 
       // For wordpress
       else if (created === 'wordpress') {
         config.pluginconfig.php.framework = 'wordpress';
         config.pluginconfig.php.version = '4';
+        config.pluginconfig.php.image = [
+          config.pluginconfig.php.framework,
+          config.pluginconfig.php.version
+        ].join(':');
+      }
+
+      // For backdrop
+      else if (created === 'backdrop') {
+        config.pluginconfig.php.framework = 'backdrop';
+        config.pluginconfig.php.version = '1';
+        config.pluginconfig.php.image = 'drupal:7';
       }
 
       // Get relevant config options

@@ -50,6 +50,7 @@ module.exports = function(kbox) {
 
   // List of viable frameworks
   var frameworks = [
+    'backdrop',
     'drupal7',
     'drupal8',
     'wordpress'
