@@ -113,8 +113,11 @@ Client.prototype.getSessionFile = function(email) {
 
   // The directory in which our sessions live
   var sessionFile = path.join(this.cacheDir, email);
-  var data = fs.readFileSync(sessionFile, 'utf8');
-  return (JSON.parse(data));
+  // Make sure SSHDIR exists
+  if (fs.existsSync(sessionFile)) {
+    var data = fs.readFileSync(sessionFile, 'utf8');
+    return (JSON.parse(data));
+  }
 
 };
 

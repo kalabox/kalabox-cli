@@ -11,6 +11,7 @@ module.exports = function(kbox, pantheon) {
 
   // Load some boxmods
   var events = kbox.core.events.context('29b1da3b-e0d0-49e3-a343-ea528a21c6e2');
+  var Promise = kbox.Promise;
 
   /*
    * Add some other important things to our kalabox.yml before
@@ -20,6 +21,7 @@ module.exports = function(kbox, pantheon) {
 
     // Grab the config from teh data
     var config = data.config;
+    var results = data.results;
 
     // Only run on Pantheon apps
     if (config.type === 'pantheon') {
@@ -38,8 +40,18 @@ module.exports = function(kbox, pantheon) {
       // Set a version
       config.version = (!locked) ? prod.url.dev : prod.url.prod;
 
+      // Make sure we have a session otherwise auth
+      // NOTE: the only reason we wouldn't have a session
+      return Promise.try(function() {
+        if (!pantheon.getSession() && results.email && results.password) {
+          return pantheon.auth(results.email, results.password);
+        }
+      })
+
       // Get site info
-      return pantheon.getSites()
+      .then(function() {
+        return pantheon.getSites();
+      })
 
       // Update our config with relevant info
       .then(function(pSites) {
