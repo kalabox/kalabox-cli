@@ -15,7 +15,7 @@ install:
   - ps: Install-Product node $env:nodejs_version x64
   - ps: >-
       $temp_dir = $env:TMP;
-      $jx_url = "https://jxcore.s3.amazonaws.com/0311/jx_winsetup.zip";
+      $jx_url = "https://raw.githubusercontent.com/jxcore/jxcore-release/master/0311/jx_winsetup.zip";
       $jx_dest = "$temp_dir\jx_winsetup.zip";
       $jx_installer = "$temp_dir\jx_winsetup\JXcore_setup.exe";
       $webclient = New-Object System.Net.WebClient;
