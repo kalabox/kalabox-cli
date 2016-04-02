@@ -53,7 +53,10 @@ module.exports = function(kbox) {
       else if (created === 'backdrop') {
         config.pluginconfig.php.framework = 'backdrop';
         config.pluginconfig.php.version = '1';
-        config.pluginconfig.php.image = 'drupal:7';
+        config.pluginconfig.php.image = 'backdrop/' + [
+          config.pluginconfig.php.framework,
+          config.pluginconfig.php.version
+        ].join(':');
       }
 
       // Get relevant config options
