@@ -13,7 +13,7 @@ module.exports = function(kbox) {
   // Npm
   var _ = require('lodash');
 
-  kbox.whenAppRegistered(function(app) {
+  kbox.core.events.on('post-app-activate', function(app) {
 
     // Load the tasks if the CLI plugin is on
     if (_.get(app.config.pluginconfig, 'cli') === 'on') {

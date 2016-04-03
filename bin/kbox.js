@@ -227,13 +227,11 @@ function main() {
     .then(function(apps) {
       return getAppContext(apps);
     })
-    // Register app context.
+    // Register app plugins.
     .then(function(appContext) {
       if (appContext) {
-        return kbox.setAppContext(appContext)
-        .then(function() {
-          return appContext;
-        });
+        return kbox.app.activate(app);
+        .return(appConfig);
       }
     });
   })

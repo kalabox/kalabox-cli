@@ -6,7 +6,7 @@
 
 module.exports = function(kbox) {
 
-  kbox.whenAppRegistered(function(app) {
+  kbox.core.events.on('post-app-create', function(app) {
     kbox.tasks.add(function(task) {
       task.path = [app.name, 'rebuild'];
       task.category = 'appAction';

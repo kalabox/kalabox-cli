@@ -2,6 +2,8 @@
 
 module.exports = function(kbox) {
 
+  // @todo: multi-app-events
+
   // Node
   var path = require('path');
   var fs = require('fs');
@@ -15,7 +17,7 @@ module.exports = function(kbox) {
   /*
    * Grab our cli config
    */
-  kbox.whenAppRegistered(function(app) {
+  kbox.core.events.on('post-app-activate', function(app) {
 
     /**
      * Add our cli yaml file into the mix
