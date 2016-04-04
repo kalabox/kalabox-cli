@@ -230,8 +230,8 @@ function main() {
     // Register app plugins.
     .then(function(appContext) {
       if (appContext) {
-        return kbox.app.activate(app);
-        .return(appConfig);
+        return kbox.app.activate(appContext)
+        .return(appContext.config);
       }
     });
   })

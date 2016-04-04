@@ -11,8 +11,6 @@ module.exports = function(kbox) {
   var chalk = require('chalk');
   var _ = require('lodash');
 
-  var events = kbox.core.events.context();
-
   kbox.core.events.on('post-app-create', function(app) {
 
     kbox.tasks.add(function(task) {
