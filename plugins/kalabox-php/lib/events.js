@@ -60,7 +60,7 @@ module.exports = function(kbox) {
       }
 
       // Get relevant config options
-      var prod = kbox.util.yaml.toJson(path.join(__dirname, 'config.yml'));
+      var prod = require(path.join(__dirname, 'config.json'));
       var locked = kbox.core.deps.get('globalConfig').locked;
 
       // Set a version
