@@ -137,7 +137,7 @@ module.exports = function(kbox) {
     /**
      * Removes proxy records via redis.
      */
-    app.events.on('post-stop', function(app) {
+    app.events.on('post-stop', function() {
 
       // Go through our services that need to be exposed
       return Promise.each(_.keys(services), function(service) {
