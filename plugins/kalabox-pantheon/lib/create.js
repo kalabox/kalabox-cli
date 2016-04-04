@@ -271,30 +271,6 @@ module.exports = function(kbox, pantheon) {
   });
 
   // Add an option
-  // @todo: make this message better?
-  // @todo: do we need this still?
-  var fMessage = 'This is quite unexpected! It looks like you do not have a ' +
-    'framework associated with your site. Please contact Pantheon support to ' +
-    'resolve this issue. In the meantime you can select your framework ' +
-    ' manually';
-  kbox.create.add('pantheon', {
-    option: {
-      name: 'framework',
-      weight: -80,
-      inquire: {
-        type: 'list',
-        message: fMessage,
-        choices: function() {
-          return frameworks;
-        },
-        when: function(answers) {
-          return answers.needsFramework;
-        }
-      }
-    }
-  });
-
-  // Add an option
   kbox.create.add('pantheon', {
     option: {
       name: 'name',
@@ -324,6 +300,28 @@ module.exports = function(kbox, pantheon) {
       },
       conf: {
         type: 'global'
+      }
+    }
+  });
+
+  // Add two basic options
+  kbox.create.add('pantheon', {
+    option: {
+      name: 'nofiles',
+      task: {
+        kind: 'boolean',
+        description: 'Skip pulling my files directory.',
+      }
+    }
+  });
+
+  // Add two basic options
+  kbox.create.add('pantheon', {
+    option: {
+      name: 'nodb',
+      task: {
+        kind: 'boolean',
+        description: 'Skip pulling my database.',
       }
     }
   });
