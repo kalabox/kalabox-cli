@@ -29,7 +29,7 @@ module.exports = function(kbox) {
   /*
    * Mix in our with default syncthing config and set into the app
    */
-  kbox.core.events.on('post-app-init', function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
     // Our default syncthing configuration
     var defaultConfig = kbox.core.config.normalize({
@@ -93,14 +93,14 @@ module.exports = function(kbox) {
   /*
    * App events
    */
-  kbox.core.events.on('post-app-init', function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
     /*
      * Restart our shares
      * Only applicable on nonlinux
      */
     if (process.platform !== 'linux') {
-      app.events.on('pre-app-stop', function() {
+      app.events.on('pre-stop', function() {
         if (app.config.sharing.share) {
           kbox.core.log.status('Stopping code sharing.');
           return share.restart();
@@ -113,7 +113,7 @@ module.exports = function(kbox) {
      * When we start an app make sure we mount the share to the correct
      * containers webroot
      */
-    app.events.on('pre-app-start', 1, function() {
+    app.events.on('pre-start', 1, function() {
 
       /*
        * Helper function to get our syncthing mount
@@ -271,7 +271,7 @@ module.exports = function(kbox) {
      * This is only applicable on non-linux
      */
     if (process.platform !== 'linux') {
-      app.events.on('post-app-uninstall', function() {
+      app.events.on('post-uninstall', function() {
 
         // Array the syncthing instances
         var syncs = [share.getRemoteSync(), share.getLocalSync()];
@@ -296,7 +296,7 @@ module.exports = function(kbox) {
      * This is only applicable on non-linux
      */
     if (process.platform !== 'linux') {
-      app.events.on('post-app-destroy', function() {
+      app.events.on('post-destroy', function() {
 
         // Command to remove
         var rmCmd = [

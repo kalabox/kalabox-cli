@@ -6,7 +6,7 @@
 
 module.exports = function(kbox) {
 
-  kbox.core.events.on('post-app-init', function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
     kbox.tasks.add(function(task) {
       task.path = [app.name, 'stop'];
       task.category = 'appAction';

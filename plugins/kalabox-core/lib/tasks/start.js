@@ -6,7 +6,7 @@
 
 module.exports = function(kbox) {
 
-  kbox.core.events.on('post-app-init', function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
     kbox.tasks.add(function(task) {
       task.path = [app.name, 'start'];
@@ -15,7 +15,7 @@ module.exports = function(kbox) {
       task.func = function() {
 
         // Print helpful stuff to the user after their app has started
-        app.events.on('post-app-start', 9, function() {
+        app.events.on('post-start', 9, function() {
           console.log(kbox.art.appStart(app));
         });
 

@@ -9,14 +9,11 @@ module.exports = function(kbox) {
   // NPM modules
   var _ = require('lodash');
 
-  // Load some boxmods
-  var events = kbox.core.events.context('29b1da3b-e0d0-49e3-a343-ea558a21c6e2');
-
   /*
    * Add some other important things to our kalabox.yml before
    * configin it
    */
-  events.on('pre-create-configure', function(data) {
+  kbox.core.events.on('pre-create-configure', function(data) {
 
     // Grab the config from teh data
     var config = data.config;

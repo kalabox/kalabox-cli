@@ -10,14 +10,13 @@ module.exports = function(kbox, pantheon) {
   var _ = require('lodash');
 
   // Load some boxmods
-  var events = kbox.core.events.context('29b1da3b-e0d0-49e3-a343-ea528a21c6e2');
   var Promise = kbox.Promise;
 
   /*
    * Add some other important things to our kalabox.yml before
    * creating it
    */
-  events.on('pre-create-configure', function(data) {
+  kbox.core.events.on('pre-create-configure', function(data) {
 
     // Grab the config from teh data
     var config = data.config;
@@ -95,7 +94,7 @@ module.exports = function(kbox, pantheon) {
   /*
    * Make sure our pantheon SSH keys are set up
    */
-  events.on('post-create-configure', function(data) {
+  kbox.core.events.on('post-create-configure', function(data) {
 
     // Grab the config from teh data
     var config = data.config;

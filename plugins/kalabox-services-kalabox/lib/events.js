@@ -17,7 +17,7 @@ module.exports = function(kbox) {
   /*
    * App events
    */
-  kbox.core.events.on('post-app-init', function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
     // Grab our services config
     var services = app.config.pluginconfig.services || {};
@@ -38,7 +38,7 @@ module.exports = function(kbox) {
     /**
      * Creates a proxy record via redis for components with proxy definitions.
      */
-    app.events.on('post-app-start', 1, function() {
+    app.events.on('post-start', 1, function() {
 
       // Go through our services that need to be exposed
       return Promise.each(_.keys(services), function(service) {
@@ -137,7 +137,7 @@ module.exports = function(kbox) {
     /**
      * Removes proxy records via redis.
      */
-    app.events.on('post-app-stop', function(app) {
+    app.events.on('post-stop', function(app) {
 
       // Go through our services that need to be exposed
       return Promise.each(_.keys(services), function(service) {
