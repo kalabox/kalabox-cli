@@ -28,11 +28,8 @@ module.exports = function(kbox) {
    */
   var packageData = function() {
 
-    // Kbox mods
-    var util = kbox.util;
-
     // Get relevant config options
-    var config = util.yaml.toJson(path.join(__dirname, 'lib', 'config.yml'));
+    var config = require(path.join(__dirname, 'lib', 'config.json'));
     var isBinary = kbox.core.deps.get('globalConfig').isBinary;
     var locked = kbox.core.deps.get('globalConfig').locked;
 
@@ -46,8 +43,8 @@ module.exports = function(kbox) {
     }
     // Return a url of an archive
     else {
-      var branch = (!locked) ? config.url.dev : config.url.prod;
-      var url = [config.url.base, 'tarball', branch].join('/');
+      var branch = (!locked) ? config.url.dev : config.url.version;
+      var url = [config.url.base, 'tarball', 'v' + branch].join('/');
       return {
         url: url,
         path: config.url.path,
