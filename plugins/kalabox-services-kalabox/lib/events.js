@@ -17,7 +17,7 @@ module.exports = function(kbox) {
   /*
    * App events
    */
-  kbox.core.events.on('post-app-create', function(app) {
+  kbox.core.events.on('post-app-init', function(app) {
 
     // Grab our services config
     var services = app.config.pluginconfig.services || {};

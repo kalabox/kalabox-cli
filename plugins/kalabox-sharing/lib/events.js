@@ -29,7 +29,7 @@ module.exports = function(kbox) {
   /*
    * Mix in our with default syncthing config and set into the app
    */
-  kbox.core.events.on('post-app-create', function(app) {
+  kbox.core.events.on('post-app-init', function(app) {
 
     // Our default syncthing configuration
     var defaultConfig = kbox.core.config.normalize({
@@ -93,7 +93,7 @@ module.exports = function(kbox) {
   /*
    * App events
    */
-  kbox.core.events.on('post-app-create', function(app) {
+  kbox.core.events.on('post-app-init', function(app) {
 
     /*
      * Restart our shares

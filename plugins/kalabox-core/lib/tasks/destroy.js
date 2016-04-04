@@ -11,7 +11,7 @@ module.exports = function(kbox) {
   var chalk = require('chalk');
   var _ = require('lodash');
 
-  kbox.core.events.on('post-app-create', function(app) {
+  kbox.core.events.on('post-app-init', function(app) {
 
     kbox.tasks.add(function(task) {
       task.path = [app.name, 'destroy'];
