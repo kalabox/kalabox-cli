@@ -11,9 +11,7 @@ module.exports = function(kbox) {
   var chalk = require('chalk');
   var _ = require('lodash');
 
-  var events = kbox.core.events.context();
-
-  kbox.whenAppRegistered(function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
     kbox.tasks.add(function(task) {
       task.path = [app.name, 'destroy'];
@@ -29,7 +27,7 @@ module.exports = function(kbox) {
 
         // Print helpful stuff to the user after their app has
         // been destroyed
-        events.on('post-app-destroy', 9, function(/*app*/) {
+        app.events.on('post-destroy', 9, function(/*app*/) {
           console.log(kbox.art.postDestroy());
         });
 

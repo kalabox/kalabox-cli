@@ -2,6 +2,8 @@
 
 module.exports = function(kbox) {
 
+  // @todo: multi-app-events
+
   // Node
   var path = require('path');
   var fs = require('fs');
@@ -15,42 +17,46 @@ module.exports = function(kbox) {
   /*
    * Grab our cli config
    */
-  kbox.whenAppRegistered(function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
-    /**
-     * Add our cli yaml file into the mix
-     */
-    if (_.get(app.config.pluginconfig, 'cli') === 'on') {
+    app.events.on('post-activate', function() {
 
-      // Set a default value of null for this here so we dont
-      // mess up other stuff
-      env.setEnv('KALABOX_CLI_WORKING_DIR', '');
+      /**
+       * Add our cli yaml file into the mix
+       */
+      if (_.get(app.config.pluginconfig, 'cli') === 'on') {
 
-      // Grab the default compose file
-      var composeFiles = [path.join(app.root, 'kalabox-cli.yml')];
+        // Set a default value of null for this here so we dont
+        // mess up other stuff
+        env.setEnv('KALABOX_CLI_WORKING_DIR', '');
 
-      // Allow other things to add task files
-      return kbox.core.events.emit('cli-add-composefiles', composeFiles)
+        // Grab the default compose file
+        var composeFiles = [path.join(app.root, 'kalabox-cli.yml')];
 
-      // Then load all the composefiles up
-      .then(function() {
+        // Allow other things to add task files
+        return kbox.core.events.emit('cli-add-composefiles', composeFiles)
 
-        // Check for our tasks and then generate tasks if the file
-        // exists
-        _.forEach(composeFiles, function(composeFile) {
+        // Then load all the composefiles up
+        .then(function() {
 
-          if (fs.existsSync(composeFile)) {
-            app.composeCore.push(composeFile);
-          }
+          // Check for our tasks and then generate tasks if the file
+          // exists
+          _.forEach(composeFiles, function(composeFile) {
+
+            if (fs.existsSync(composeFile)) {
+              app.composeCore.push(composeFile);
+            }
+
+          });
+
+          // Make sure we are always unique
+          app.composeCore = _.uniq(app.composeCore);
 
         });
 
-        // Make sure we are always unique
-        app.composeCore = _.uniq(app.composeCore);
+      }
 
-      });
-
-    }
+    });
 
   });
 

@@ -12,7 +12,6 @@ module.exports = function(kbox) {
 
   // Kalabox
   var Promise = kbox.Promise;
-  var events = kbox.core.events.context();
   var share = require('./share.js')(kbox);
 
   // Syncthing container
@@ -30,7 +29,7 @@ module.exports = function(kbox) {
   /*
    * Mix in our with default syncthing config and set into the app
    */
-  events.on('post-app-create', function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
     // Our default syncthing configuration
     var defaultConfig = kbox.core.config.normalize({
@@ -75,7 +74,7 @@ module.exports = function(kbox) {
    * this is only relevant on non-linux
    */
   if (process.platform !== 'linux') {
-    events.on('pre-engine-down', function() {
+    kbox.core.events.on('pre-engine-down', function() {
       // Get local sync instance
       return share.getLocalSync()
       .then(function(localSync) {
@@ -94,14 +93,14 @@ module.exports = function(kbox) {
   /*
    * App events
    */
-  kbox.whenAppRegistered(function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
     /*
      * Restart our shares
      * Only applicable on nonlinux
      */
     if (process.platform !== 'linux') {
-      events.on('pre-app-stop', function() {
+      app.events.on('pre-stop', function() {
         if (app.config.sharing.share) {
           kbox.core.log.status('Stopping code sharing.');
           return share.restart();
@@ -114,7 +113,7 @@ module.exports = function(kbox) {
      * When we start an app make sure we mount the share to the correct
      * containers webroot
      */
-    events.on('pre-app-start', 1, function(app) {
+    app.events.on('pre-start', 1, function() {
 
       /*
        * Helper function to get our syncthing mount
@@ -272,7 +271,7 @@ module.exports = function(kbox) {
      * This is only applicable on non-linux
      */
     if (process.platform !== 'linux') {
-      events.on('post-app-uninstall', function(app) {
+      app.events.on('post-uninstall', function() {
 
         // Array the syncthing instances
         var syncs = [share.getRemoteSync(), share.getLocalSync()];
@@ -297,7 +296,7 @@ module.exports = function(kbox) {
      * This is only applicable on non-linux
      */
     if (process.platform !== 'linux') {
-      events.on('post-app-destroy', function(app) {
+      app.events.on('post-destroy', function() {
 
         // Command to remove
         var rmCmd = [

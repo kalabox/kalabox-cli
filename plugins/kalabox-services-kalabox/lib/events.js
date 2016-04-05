@@ -10,7 +10,6 @@ module.exports = function(kbox) {
 
   // Kalabox modules
   var Promise = kbox.Promise;
-  var events = kbox.core.events.context();
 
   // Logging
   var log = kbox.core.log.make('SERVICES');
@@ -18,7 +17,7 @@ module.exports = function(kbox) {
   /*
    * App events
    */
-  kbox.whenAppRegistered(function(app) {
+  kbox.core.events.on('post-app-load', function(app) {
 
     // Grab our services config
     var services = app.config.pluginconfig.services || {};
@@ -39,7 +38,7 @@ module.exports = function(kbox) {
     /**
      * Creates a proxy record via redis for components with proxy definitions.
      */
-    events.on('post-app-start', 1, function(app) {
+    app.events.on('post-start', 1, function() {
 
       // Go through our services that need to be exposed
       return Promise.each(_.keys(services), function(service) {
@@ -138,7 +137,7 @@ module.exports = function(kbox) {
     /**
      * Removes proxy records via redis.
      */
-    events.on('post-app-stop', function(app) {
+    app.events.on('post-stop', function() {
 
       // Go through our services that need to be exposed
       return Promise.each(_.keys(services), function(service) {
