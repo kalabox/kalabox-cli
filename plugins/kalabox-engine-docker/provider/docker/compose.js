@@ -253,7 +253,10 @@ module.exports = function(kbox) {
 
     // Up us
     var cmd = buildCmd(compose, project, 'up', options);
-    return shCompose(cmd, {mode: 'collect'});
+    return shCompose(cmd, {
+      app: opts.app,
+      mode: 'collect'
+    });
 
   };
 
@@ -270,7 +273,12 @@ module.exports = function(kbox) {
     // Get opts
     var options = (opts) ? _.merge(defaults, opts) : defaults;
 
-    return shCompose(buildCmd(compose, project, 'ps', options));
+    return shCompose(
+      buildCmd(compose, project, 'ps', options),
+      {
+        app: opts.app
+      }
+    );
   };
 
   /*
@@ -278,7 +286,10 @@ module.exports = function(kbox) {
    */
   var build = function(compose, project, opts) {
     var cmd = buildCmd(compose, project, 'build', opts);
-    return shCompose(cmd, {mode: 'collect'});
+    return shCompose(cmd, {
+      app: opts.app,
+      mode: 'collect'
+    });
   };
 
   /*
@@ -286,7 +297,10 @@ module.exports = function(kbox) {
    */
   var pull = function(compose, project, opts) {
     var cmd = buildCmd(compose, project, 'pull', opts);
-    return shCompose(cmd, {mode: 'collect'});
+    return shCompose(cmd, {
+      app: opts.app,
+      mode: 'collect'
+    });
   };
 
   /*
@@ -294,7 +308,10 @@ module.exports = function(kbox) {
    */
   var stop = function(compose, project, opts) {
     var cmd = buildCmd(compose, project, 'stop', opts);
-    return shCompose(cmd, {mode: 'collect'});
+    return shCompose(cmd, {
+      app: opts.app,
+      mode: 'collect'
+    });
   };
 
   /*
@@ -313,7 +330,10 @@ module.exports = function(kbox) {
 
     // Build the command and run it
     var cmd = buildCmd(compose, project, 'rm', options);
-    return shCompose(cmd, {mode: 'collect'});
+    return shCompose(cmd, {
+      app: opts.app,
+      mode: 'collect'
+    });
   };
 
   /*
@@ -339,7 +359,13 @@ module.exports = function(kbox) {
     var mode = (options.background) ? false : (opts.mode || false);
 
     // Execute
-    return shCompose(buildCmd(compose, project, 'run', options), {mode: mode});
+    return shCompose(
+      buildCmd(compose, project, 'run', options),
+      {
+        app: opts.app,
+        mode: mode
+      }
+    );
 
   };
 
