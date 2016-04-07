@@ -31,7 +31,10 @@ module.exports = function(kbox) {
     var getAppServices = function(app) {
       return {
         compose: _.uniq(app.composeCore),
-        project: app.name
+        project: app.name,
+        opts: {
+          app: app
+        }
       };
     };
 
@@ -51,9 +54,7 @@ module.exports = function(kbox) {
 
         // Build an inspect definition
         var inspectService = getAppServices(app);
-        inspectService.opts = {
-          services: [service]
-        };
+        inspectService.opts.services = [service];
 
         // Query engine for component container's information.
         kbox.engine.inspect(inspectService)
