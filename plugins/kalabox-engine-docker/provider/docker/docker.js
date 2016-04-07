@@ -298,20 +298,6 @@ module.exports = function(kbox) {
     // Get the mode
     var mode = (opts && opts.mode) ? opts.mode : 'collect';
 
-    // If a reference to an app is given, inject it's env into createOpts.
-    if (opts.app) {
-      // Get app env.
-      var appEnv = opts.app.env.getEnv();
-      // Get process env.
-      var processEnv = _.cloneDeep(process.env);
-      // Merge app and process env.
-      var env = _.merge(processEnv, appEnv);
-      // Add env to create opts.
-      createOpts.Env = _.map(env, function(val, key) {
-        return [key, val].join('=');
-      });
-    }
-
     // Start by creating a container
     return Promise.fromNode(function(cb) {
       dockerInstance().call('createContainer', createOpts, cb);
