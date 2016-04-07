@@ -43,7 +43,8 @@ module.exports = function(kbox) {
               mode: 'attach',
               services: [options.service],
               entrypoint: options.entrypoint,
-              cmd: options.cmd
+              cmd: options.cmd,
+              app: app
             }
           };
         };
@@ -107,8 +108,7 @@ module.exports = function(kbox) {
                       var pwdSplit = process.cwd().split(path.sep);
                       var diffDir = _.drop(pwdSplit, lSplit.length).join('/');
                       var workingDir = [dirs[1], diffDir].join('/');
-                      var env = kbox.core.env;
-                      env.setEnv('KALABOX_CLI_WORKING_DIR', workingDir);
+                      app.env.setEnv('KALABOX_CLI_WORKING_DIR', workingDir);
                     }
 
                     // Shift off our first cmd arg if its also the entrypoint
