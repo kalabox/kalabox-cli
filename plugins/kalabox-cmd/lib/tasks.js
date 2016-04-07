@@ -43,7 +43,8 @@ module.exports = function(kbox) {
               mode: 'attach',
               services: [options.service],
               entrypoint: options.entrypoint,
-              cmd: options.cmd
+              cmd: options.cmd,
+              app: app
             }
           };
         };
