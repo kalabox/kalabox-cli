@@ -104,6 +104,10 @@ module.exports = function(kbox) {
           ]);
         }
         return result;
+      })
+      // Ignore errors.
+      .catch(function() {
+        return result;
       });
     }, {})
     // Log mapped object.
