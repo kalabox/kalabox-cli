@@ -226,13 +226,6 @@ function main() {
     // Find app context.
     .then(function(apps) {
       return getAppContext(apps);
-    })
-    // Register app plugins.
-    .then(function(appContext) {
-      if (appContext) {
-        return kbox.app.activate(appContext)
-        .return(appContext.config);
-      }
     });
   })
 
