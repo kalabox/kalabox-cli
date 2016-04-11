@@ -30,6 +30,13 @@ module.exports = function(kbox) {
   };
 
   /*
+   * Add a "first sync" property to the app if this is a create even
+   */
+  kbox.core.events.on('pre-create-app', function(config) {
+    config.pluginconfig.sharing.firstTime = true;
+  });
+
+  /*
    * Mix in our with default syncthing config and set into the app
    */
   kbox.core.events.on('post-app-load', function(app) {
@@ -125,88 +132,88 @@ module.exports = function(kbox) {
      */
     app.events.on('pre-start', 1, function() {
 
+      /*
+       * Helper function to get our syncthing mount
+       */
+      var syncMount = function(codeRoot) {
+
+        // Write the local ignore file
+        return Promise.try(function() {
+          var shareIgnores = app.config.sharing.ignore.join(os.EOL);
+          var stignoreFile = path.join(codeRoot, '.stignore');
+          return Promise.fromNode(function(cb) {
+            fs.writeFile(stignoreFile, shareIgnores, cb);
+          });
+        })
+
+        // Refresh our syncthing situation
+        .then(function() {
+          return share.restart();
+        })
+
+        // Make sure remote dir exists
+        .then(function() {
+          // Command to make query.
+          var createCmd = [
+            '-p',
+            '/code/' + app.name
+          ];
+          // Build run definition
+          var createDef = syncthingContainer();
+          createDef.opts.entrypoint = '/bin/mkdir';
+          createDef.opts.cmd = createCmd;
+          return kbox.engine.run(createDef);
+        })
+
+        // Make sure it has a .stfolder file
+        .then(function() {
+          // Command to make query.
+          var touchCmd = ['/code/' + app.name + '/.stfolder'];
+          // Build run definition
+          var touchDef = syncthingContainer();
+          touchDef.opts.entrypoint = 'touch';
+          touchDef.opts.cmd = touchCmd;
+          return kbox.engine.run(touchDef);
+        })
+
+        // Write the remote ignore file
+        .then(function() {
+
+          // Compute the remote ignore file location
+          var home = kbox.core.deps.get('globalConfig').home;
+          var homeSplit = home.split(path.sep);
+          var codeRootSplit = app.config.sharing.codeRoot.split(path.sep);
+          var remoteDir = _.drop(codeRootSplit, homeSplit.length).join('/');
+
+          // Command to make query.
+          var cpCmd = [
+            '/src/' + remoteDir + '/.stignore',
+            '/code/' + app.name + '/.stignore'
+          ];
+          // Build run definition
+          var runDef = syncthingContainer();
+          runDef.opts.entrypoint = '/bin/cp';
+          runDef.opts.cmd = cpCmd;
+          return kbox.engine.run(runDef);
+        })
+
+        // Inspect syncthing
+        .then(function() {
+          return kbox.engine.inspect(syncthingContainer());
+        })
+
+        // Return syncthing code mount.
+        .then(function(data) {
+          var mount = _.result(_.find(data.Mounts, function(mount) {
+            return mount.Destination === '/code';
+          }), 'Source');
+          return mount + '/' + app.name;
+        });
+
+      };
+
       // Run through serializer.
       return serializer.enqueue(function() {
-
-        /*
-         * Helper function to get our syncthing mount
-         */
-        var syncMount = function() {
-
-          // Write the local ignore file
-          return Promise.try(function() {
-            var shareIgnores = app.config.sharing.ignore.join(os.EOL);
-            var stignoreFile = path.join(codeRoot, '.stignore');
-            return Promise.fromNode(function(cb) {
-              fs.writeFile(stignoreFile, shareIgnores, cb);
-            });
-          })
-
-          // Refresh our syncthing situation
-          .then(function() {
-            return share.restart();
-          })
-
-          // Make sure remote dir exists
-          .then(function() {
-            // Command to make query.
-            var createCmd = [
-              '-p',
-              '/code/' + app.name
-            ];
-            // Build run definition
-            var createDef = syncthingContainer();
-            createDef.opts.entrypoint = '/bin/mkdir';
-            createDef.opts.cmd = createCmd;
-            return kbox.engine.run(createDef);
-          })
-
-          // Make sure it has a .stfolder file
-          .then(function() {
-            // Command to make query.
-            var touchCmd = ['/code/' + app.name + '/.stfolder'];
-            // Build run definition
-            var touchDef = syncthingContainer();
-            touchDef.opts.entrypoint = 'touch';
-            touchDef.opts.cmd = touchCmd;
-            return kbox.engine.run(touchDef);
-          })
-
-          // Write the remote ignore file
-          .then(function() {
-
-            // Compute the remote ignore file location
-            var home = kbox.core.deps.get('globalConfig').home;
-            var homeSplit = home.split(path.sep);
-            var codeRootSplit = app.config.sharing.codeRoot.split(path.sep);
-            var remoteDir = _.drop(codeRootSplit, homeSplit.length).join('/');
-
-            // Command to make query.
-            var cpCmd = [
-              '/src/' + remoteDir + '/.stignore',
-              '/code/' + app.name + '/.stignore'
-            ];
-            // Build run definition
-            var runDef = syncthingContainer();
-            runDef.opts.entrypoint = '/bin/cp';
-            runDef.opts.cmd = cpCmd;
-            return kbox.engine.run(runDef);
-          })
-
-          // Inspect syncthing
-          .then(function() {
-            return kbox.engine.inspect(syncthingContainer());
-          })
-
-          // Return syncthing code mount.
-          .then(function(data) {
-            var mount = _.result(_.find(data.Mounts, function(mount) {
-              return mount.Destination === '/code';
-            }), 'Source');
-            return mount + '/' + app.name;
-          });
-
-        };
 
         if (app.config.sharing.share) {
 
@@ -223,7 +230,7 @@ module.exports = function(kbox) {
           // Add the sharing mount to container with the webroot at that webroot
           .then(function() {
             if (process.platform !== 'linux') {
-              return syncMount();
+              return syncMount(codeRoot);
             }
             else {
               return codeRoot;
@@ -277,9 +284,7 @@ module.exports = function(kbox) {
 
           });
         }
-
       });
-
     });
 
     /*
