@@ -32,9 +32,8 @@ module.exports = function(kbox) {
     // NOTE: We do this for the case where we are trying to
     // set up an app for the first time before any of its
     // containers are on or off
-    if (core.deps.contains('app')) {
-      var regName = core.deps.get('app').name;
-      return app.config.sharing.share && regName === app.name;
+    if (_.get(app.config.sharing, 'firstTime', false)) {
+      return true;
     }
 
     // Otherwise get a list of app's containers.
