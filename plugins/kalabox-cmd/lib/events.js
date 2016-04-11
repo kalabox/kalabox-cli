@@ -12,42 +12,39 @@ module.exports = function(kbox) {
   var _ = require('lodash');
 
   /*
-   * Grab our cli config
+   * Add in extra compose files if they are there
    */
-  kbox.core.events.on('post-app-load', function(app) {
+  kbox.core.events.on('post-app-load', 1, function(app) {
 
     /**
-     * Add our cli yaml file into the mix
+     * Add our default cli yaml file into the mix
      */
     if (_.get(app.config.pluginconfig, 'cli') === 'on') {
+
+      // Add a place to collect taskfiles
+      app.taskFiles = [];
 
       // Set a default value of null for this here so we dont
       // mess up other stuff
       app.env.setEnv('KALABOX_CLI_WORKING_DIR', '');
 
-      // Grab the default compose file
-      var composeFiles = [path.join(app.root, 'kalabox-cli.yml')];
+      // Grab the default compose and cli files
+      var defaultCliCompose = path.join(app.root, 'kalabox-cli.yml');
+      var defaultTaskCompose = path.join(app.root, 'cli.yml');
 
-      // Allow other things to add task files
-      return kbox.core.events.emit('cli-add-composefiles', composeFiles)
+      // If it exists let's add it to the mix
+      if (fs.existsSync(defaultCliCompose)) {
+        app.composeCore.push(defaultCliCompose);
+      }
 
-      // Then load all the composefiles up
-      .then(function() {
+      // If it exists let's add it to the mix
+      if (fs.existsSync(defaultTaskCompose)) {
+        app.taskFiles.push(defaultTaskCompose);
+      }
 
-        // Check for our tasks and then generate tasks if the file
-        // exists
-        _.forEach(composeFiles, function(composeFile) {
-
-          if (fs.existsSync(composeFile)) {
-            app.composeCore.push(composeFile);
-          }
-
-        });
-
-        // Make sure we are always unique
-        app.composeCore = _.uniq(app.composeCore);
-
-      });
+      // Make sure we are always unique
+      app.composeCore = _.uniq(app.composeCore);
+      app.taskFiles = _.uniq(app.taskFiles);
 
     }
 
