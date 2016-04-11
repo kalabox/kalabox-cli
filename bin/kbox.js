@@ -226,6 +226,12 @@ function main() {
     // Find app context.
     .then(function(apps) {
       return getAppContext(apps);
+    })
+    // Load app's cli tasks.
+    .tap(function(appContext) {
+      if (appContext) {
+        return kbox.app.loadTasks(appContext);
+      }
     });
   })
 
