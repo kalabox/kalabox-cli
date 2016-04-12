@@ -34,7 +34,7 @@ module.exports = function(kbox, pantheon) {
       var locked = kbox.core.deps.get('globalConfig').locked;
 
       // Expose the correct pantheon img version
-      pantheonConfig.images = (!locked) ? 'dev' : prod.url.prod;
+      pantheonConfig.images = (!locked) ? 'dev' : 'v' + prod.url.version;
 
       // Set a version
       config.version = (!locked) ? prod.url.dev : prod.url.version;
