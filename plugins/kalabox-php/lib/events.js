@@ -61,7 +61,7 @@ module.exports = function(kbox) {
       var locked = kbox.core.deps.get('globalConfig').locked;
 
       // Set a version
-      config.version = (!locked) ? prod.url.dev : prod.url.prod;
+      config.version = (!locked) ? prod.url.dev : prod.url.version;
 
     }
 

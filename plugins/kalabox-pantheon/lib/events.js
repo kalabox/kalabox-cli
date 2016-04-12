@@ -37,7 +37,7 @@ module.exports = function(kbox, pantheon) {
       pantheonConfig.images = (!locked) ? 'dev' : prod.url.prod;
 
       // Set a version
-      config.version = (!locked) ? prod.url.dev : prod.url.prod;
+      config.version = (!locked) ? prod.url.dev : prod.url.version;
 
       // Make sure we have a session otherwise auth
       // NOTE: the only reason we wouldn't have a session
