@@ -69,6 +69,7 @@ module.exports = function(kbox, pantheon) {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
         pantheonConfig.php = site.php_version || 53;
         pantheonConfig.upstream = site.upstream;
+        pantheonConfig.uuid = uuid;
 
         // Remove password
         delete pantheonConfig.password;
