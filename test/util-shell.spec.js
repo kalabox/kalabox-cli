@@ -38,7 +38,7 @@ describe('shell', function() {
       var expected = util.format(
         'code: %serr:%s: %s\n',
         '127',
-        '/bin/sh: ' + cmd.join(' '),
+        '/bin/sh: 1?:? ' + cmd.join(' '),
         '.*not found'
       );
 
