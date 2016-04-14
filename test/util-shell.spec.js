@@ -38,8 +38,8 @@ describe('shell', function() {
       var expected = util.format(
         'code: %serr:%s: %s\n',
         '127',
-        '/bin/sh: 1?:? ' + cmd.join(' '),
-        '.*not found'
+        '/bin/sh: (1: )?' + cmd.join(' '),
+        '(command )?not found'
       );
 
       var rx = new RegExp(expected);
