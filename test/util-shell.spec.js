@@ -39,7 +39,7 @@ describe('shell', function() {
         'code: %serr:%s: %s\n',
         '127',
         '/bin/sh: ' + cmd.join(' '),
-        '.* not found'
+        '.*not found'
       );
 
       var rx = new RegExp(expected);
