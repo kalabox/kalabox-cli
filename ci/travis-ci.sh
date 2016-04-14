@@ -82,7 +82,13 @@ install() {
 # Run before tests
 #
 before-script() {
-  echo
+
+  # Install kalabox
+  sudo apt-get -y update
+  sudo apt-get -y install iptables cgroup-lite bridge-utils curl
+  curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
+  sudo dpkg -i /tmp/kalabox.deb
+
 }
 
 # script
@@ -100,6 +106,18 @@ script() {
   # Do a basic jx build for a very basic test
   run_command grunt pkg --dev>/dev/null
   run_command dist/kbox* version
+
+  #
+  # Run all our functional tests
+  #
+
+  # Verify install
+  run_command grunt test:install
+  # Ensure images
+  run_command grunt test:images
+
+  # Do the KALABOX_TEST_GROUP
+  run_command grunt test:$KALABOX_TEST_GROUP
 
 }
 
