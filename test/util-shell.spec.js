@@ -24,7 +24,7 @@ describe('shell', function() {
     it('should return a promise resolved to stdout', function() {
 
       return shell.exec(['echo', 'foo'])
-      .should.become('foo\n');
+      .should.eventually.match(/foo(\n|\r\n)/);
 
     });
 
@@ -36,7 +36,7 @@ describe('shell', function() {
       var cmd = ['not-a-real-cmd'];
 
       var expected = util.format(
-        'code: %serr:%s: %s\n',
+        'code: %serr:%s: %s(\n|\r\n)',
         '127',
         '/bin/sh: (1: )?' + cmd.join(' '),
         '(command )?not found'
@@ -72,9 +72,9 @@ describe('shell', function() {
       };
 
       return shell.exec(['env'], opts).should.eventually
-      .match(/favoriteColor=blue\n/)
-      .match(/catName=molly\n/)
-      .match(/unicornRainbows=on fleek\n/);
+      .match(/favoriteColor=blue(\n|\r\n)/)
+      .match(/catName=molly(\n|\r\n)/)
+      .match(/unicornRainbows=on fleek(\n|\r\n)/);
 
     });
 
