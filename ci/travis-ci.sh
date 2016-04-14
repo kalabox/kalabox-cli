@@ -111,6 +111,8 @@ script() {
   # Run all our functional tests
   #
 
+  #debuggin
+  run_command ls -l /usr/bin/xdg-desktop-menu/
   # Verify install
   run_command grunt test:install
   # Ensure images
