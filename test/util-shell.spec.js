@@ -36,14 +36,15 @@ describe('shell', function() {
       var cmd = ['not-a-real-cmd'];
 
       var expected = util.format(
-        //'cmd: %s, code: %s, err: %s, stdout: %s',
         'code: %serr:%s: %s\n',
         '127',
         '/bin/sh: ' + cmd.join(' '),
-        'command not found'
+        '(command not found|not found)'
       );
 
-      return shell.exec(['not-a-real-cmd']).should.be.rejectedWith(expected);
+      var rx = new RegExp(expected);
+
+      return shell.exec(['not-a-real-cmd']).should.be.rejectedWith(rx);
 
     });
 
