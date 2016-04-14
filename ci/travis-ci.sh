@@ -87,9 +87,6 @@ before-script() {
   sudo apt-get -y update
   sudo apt-get -y install iptables cgroup-lite bridge-utils curl
   curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
-  sudo mkdir /usr/share/desktop-directories/
-  #debuggin
-  run_command ls -l /usr/bin/xdg-desktop-menu/
   sudo dpkg -i /tmp/kalabox.deb
 
 }
