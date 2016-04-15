@@ -84,13 +84,13 @@ install() {
 before-script() {
 
   # Install kalabox
-  sudo apt-get -y update
-  sudo apt-get -y install iptables cgroup-lite bridge-utils curl
-  curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
-  sudo dpkg -i /tmp/kalabox.deb || true
+#  sudo apt-get -y update
+#  sudo apt-get -y install iptables cgroup-lite bridge-utils curl
+#  curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
+#  sudo dpkg -i /tmp/kalabox.deb || true
 
-  sudo cp ./dist/kbox* /usr/local/bin/kbox
-  sudo chmod +x /usr/local/bin/kbox
+#  sudo cp ./dist/kbox* /usr/local/bin/kbox
+#  sudo chmod +x /usr/local/bin/kbox
 
 }
 
@@ -109,6 +109,14 @@ script() {
   # Do a basic jx build for a very basic test
   run_command grunt pkg --dev>/dev/null
   run_command dist/kbox* version
+
+  # Install kalabox
+  sudo apt-get -y update
+  sudo apt-get -y install iptables cgroup-lite bridge-utils curl
+  curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
+  sudo dpkg -i /tmp/kalabox.deb || true
+  sudo cp ./dist/kbox* /usr/local/bin/kbox
+  sudo chmod +x /usr/local/bin/kbox
 
   # Run all our functional tests
   run_command grunt test:func
