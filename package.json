@@ -55,6 +55,7 @@
     "yargs": "^3.7.0"
   },
   "devDependencies": {
+    "bats": "git+https://github.com/sstephenson/bats.git#master",
     "ben": "0.0.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.3.0",

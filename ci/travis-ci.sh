@@ -107,17 +107,8 @@ script() {
   run_command grunt pkg --dev>/dev/null
   run_command dist/kbox* version
 
-  #
   # Run all our functional tests
-  #
-
-  # Verify install
-  run_command grunt test:install
-  # Ensure images
-  run_command grunt test:images
-
-  # Do the KALABOX_TEST_GROUP
-  run_command grunt test:$KALABOX_TEST_GROUP
+  run_command grunt test:func
 
 }
 

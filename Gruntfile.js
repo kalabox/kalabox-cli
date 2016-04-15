@@ -90,6 +90,10 @@ module.exports = function(grunt) {
   var docBuildCmd = [docBin, docOpts.join(' ')].join(' ');
   var docLintCmd = [docBin, 'lint'].join(' ');
 
+  // Functional testing helpers
+  var funcOpts = {execOptions: {maxBuffer: 20 * 1024 * 1024}};
+  var funcCommand = 'node_modules/bats/libexec/bats ${CI:+--tap}';
+
   // Setup task config
   var config = {
 
@@ -181,8 +185,9 @@ module.exports = function(grunt) {
     /* jshint ignore:end */
     // jscs:enable
 
-    // Shell tasks for building
+    // Shell tasks
     shell: {
+      // Shell tasks for building
       build: {
         options: {
           execOptions: {
@@ -192,6 +197,7 @@ module.exports = function(grunt) {
         },
         command: buildCmds.join(' && ')
       },
+      // Shell tasks for document generation
       docgen: {
         options: {
           execOptions: {
@@ -200,6 +206,7 @@ module.exports = function(grunt) {
         },
         command: docBuildCmd
       },
+      // Shell tasks for linting
       doclint: {
         options: {
           execOptions: {
@@ -207,6 +214,11 @@ module.exports = function(grunt) {
           }
         },
         command: docLintCmd
+      },
+      // Shell tasks for functional testing
+      func: {
+        options: funcOpts,
+        command: funcCommand + './test/*.bats'
       }
     },
 
@@ -292,6 +304,10 @@ module.exports = function(grunt) {
   grunt.registerTask('test:code', [
     'jshint',
     'jscs'
+  ]);
+
+  grunt.registerTask('test:func', [
+    'shell:func'
   ]);
 
   // Run all the tests
