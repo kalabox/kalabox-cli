@@ -23,8 +23,14 @@ describe('shell', function() {
      */
     it('should return a promise resolved to stdout', function() {
 
-      return shell.exec(['echo', 'foo'])
-      .should.eventually.match(/foo(\n|\r\n)/);
+      if (process.platform === 'win32') {
+
+      } else {
+
+        return shell.exec(['echo', 'foo'])
+        .should.eventually.match(/foo(\n|\r\n)/);
+
+      }
 
     });
 
@@ -33,18 +39,24 @@ describe('shell', function() {
      */
     it('should return a fail object when it is rejected.', function() {
 
-      var cmd = ['not-a-real-cmd'];
+      if (process.platform === 'win32') {
 
-      var expected = util.format(
-        'code: %serr:%s: %s(\n|\r\n)',
-        '127',
-        '/bin/sh: (1: )?' + cmd.join(' '),
-        '(command )?not found'
-      );
+      } else {
 
-      var rx = new RegExp(expected);
+        var cmd = ['not-a-real-cmd'];
 
-      return shell.exec(['not-a-real-cmd']).should.be.rejectedWith(rx);
+        var expected = util.format(
+          'code: %serr:%s: %s(\n|\r\n)',
+          '127',
+          '/bin/sh: (1: )?' + cmd.join(' '),
+          '(command )?not found'
+        );
+
+        var rx = new RegExp(expected);
+
+        return shell.exec(['not-a-real-cmd']).should.be.rejectedWith(rx);
+
+      }
 
     });
 
@@ -71,10 +83,16 @@ describe('shell', function() {
         app: mockApp
       };
 
-      return shell.exec(['env'], opts).should.eventually
-      .match(/favoriteColor=blue(\n|\r\n)/)
-      .match(/catName=molly(\n|\r\n)/)
-      .match(/unicornRainbows=on fleek(\n|\r\n)/);
+      if (process.platform === 'win32') {
+
+      } else {
+
+        return shell.exec(['env'], opts).should.eventually
+        .match(/favoriteColor=blue(\n|\r\n)/)
+        .match(/catName=molly(\n|\r\n)/)
+        .match(/unicornRainbows=on fleek(\n|\r\n)/);
+
+      }
 
     });
 
