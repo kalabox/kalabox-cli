@@ -3,6 +3,6 @@
 
 # just testing
 @test "just do anything that passes" {
-  run which kbox
+  run which echo
   [ "$status" -eq 0 ]
 }
