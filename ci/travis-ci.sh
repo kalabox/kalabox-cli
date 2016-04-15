@@ -89,6 +89,9 @@ before-script() {
   curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
   sudo dpkg -i /tmp/kalabox.deb || true
 
+  sudo cp ./dist/kbox* /usr/local/bin/kbox
+  sudo chmod +x /usr/local/bin/kbox
+
 }
 
 # script
