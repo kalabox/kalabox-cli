@@ -83,11 +83,18 @@ install() {
 #
 before-script() {
 
-  # Install kalabox
-  sudo apt-get -y update
-  sudo apt-get -y install iptables cgroup-lite bridge-utils curl
-  curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
-  sudo dpkg -i /tmp/kalabox.deb || true
+  #
+  # Install kalabox for functional tests if we are on linux
+  #
+  if [ $TRAVIS_OS_NAME == "linux" ]; then
+
+    # Install kalabox
+    sudo apt-get -y update
+    sudo apt-get -y install iptables cgroup-lite bridge-utils curl
+    curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
+    sudo dpkg -i /tmp/kalabox.deb || true
+
+  fi
 
 }
 
@@ -107,12 +114,19 @@ script() {
   run_command grunt pkg --dev>/dev/null
   run_command dist/kbox* version
 
-  # Use the binary that was just built
-  sudo cp ./dist/kbox* /usr/local/bin/kbox
-  sudo chmod +x /usr/local/bin/kbox
+  #
+  # Run functional tests if we are on linux
+  #
+  if [ $TRAVIS_OS_NAME == "linux" ]; then
 
-  # Run all our functional tests
-  run_command grunt test:func
+    # Use the binary that was just built
+    sudo cp ./dist/kbox* /usr/local/bin/kbox
+    sudo chmod +x /usr/local/bin/kbox
+
+    # Run all our functional tests
+    run_command grunt test:func
+
+  fi
 
 }
 
