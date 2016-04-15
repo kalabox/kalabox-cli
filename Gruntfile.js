@@ -218,7 +218,7 @@ module.exports = function(grunt) {
       // Shell tasks for functional testing
       func: {
         options: funcOpts,
-        command: funcCommand + './test/test.bats'
+        command: funcCommand + ' ./test/test.bats'
       }
     },
 
