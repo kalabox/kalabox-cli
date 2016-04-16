@@ -1,5 +1,5 @@
 Contributing to the Kalabox CLI
-=======================
+===============================
 
 Creating Issues
 ---------------
