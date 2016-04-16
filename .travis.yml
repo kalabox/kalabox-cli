@@ -62,3 +62,6 @@ deploy:
     on:
       repo: kalabox/kalabox-cli
       branch: v0.12
+env:
+  global:
+    - DOCKER_HOST: tcp://10.13.37.100:2375

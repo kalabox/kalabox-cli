@@ -82,7 +82,20 @@ install() {
 # Run before tests
 #
 before-script() {
-  echo
+
+  #
+  # Install kalabox for functional tests if we are on linux
+  #
+  if [ $TRAVIS_OS_NAME == "linux" ]; then
+
+    # Install kalabox
+    sudo apt-get -y update
+    sudo apt-get -y install iptables cgroup-lite bridge-utils curl
+    curl -fsSL -o /tmp/kalabox.deb "http://installer.kalabox.io/kalabox-latest.deb"
+    sudo dpkg -i /tmp/kalabox.deb || true
+
+  fi
+
 }
 
 # script
@@ -100,6 +113,20 @@ script() {
   # Do a basic jx build for a very basic test
   run_command grunt pkg --dev>/dev/null
   run_command dist/kbox* version
+
+  #
+  # Run functional tests if we are on linux
+  #
+  if [ $TRAVIS_OS_NAME == "linux" ]; then
+
+    # Use the binary that was just built
+    sudo cp ./dist/kbox* /usr/local/bin/kbox
+    sudo chmod +x /usr/local/bin/kbox
+
+    # Run all our functional tests
+    run_command grunt test:func
+
+  fi
 
 }
 
