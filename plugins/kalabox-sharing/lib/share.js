@@ -25,7 +25,7 @@ module.exports = function(kbox) {
   /*
    * Given an app return true if the app has any containers running.
    */
-  var isAppActive = function(app) {
+  /*var isAppActive = function(app) {
 
     // First check to see if this app is the currently
     // registered app and return that regardless
@@ -56,13 +56,13 @@ module.exports = function(kbox) {
       return count > 0;
     });
 
-  };
+  };*/
 
   /*
    * Returns a function that maps app name to number of minutes since that
    * app was stopped.
    */
-  var minutesSinceAppStoppedMap = function() {
+  /*var minutesSinceAppStoppedMap = function() {
 
     // Get current time stamp.
     var now = moment();
@@ -84,10 +84,8 @@ module.exports = function(kbox) {
       // Inspect the container.
       return engine.inspect(container)
       .then(function(data) {
-        /*
-         * Get the number of minutes since the container stopped, or if the
-         * container is still running just return 0.
-         */
+        // Get the number of minutes since the container stopped, or if the
+        // container is still running just return 0.
         var sinceMinutes = data.State.Running ?
           0 :
           moment(data.State.FinishedAt).diff(now, 'minutes');
@@ -124,7 +122,7 @@ module.exports = function(kbox) {
       };
     });
 
-  };
+  };*/
 
   /*
    * Get a unique list of installed apps.
@@ -153,7 +151,6 @@ module.exports = function(kbox) {
     // Get list of data app.
     return app.list()
     // Map list to volume objects.
-    .filter(isAppActive)
     .map(function(app) {
       if (app.name) {
         return {app: app.name};
@@ -409,8 +406,21 @@ module.exports = function(kbox) {
 
       var self = this;
 
+      // Default rescan interval.
+      var defaultRescanInterval = 3;
+
+      // Update local folders.
+      _.each(self.localConfig.folders, function(folder) {
+        folder.rescanIntervalS = defaultRescanInterval;
+      });
+
+      // Update remote folder.
+      _.each(self.remoteConfig.folders, function(folder) {
+        folder.rescanIntervalS = defaultRescanInterval;
+      });
+
       // Get mapping function for app name -> minutes since app stopped.
-      return minutesSinceAppStoppedMap()
+      /*return minutesSinceAppStoppedMap()
       .then(function(map) {
 
         // Interpolate minutes since app stopped to a rescan interval in seconds.
@@ -437,7 +447,7 @@ module.exports = function(kbox) {
           folder.rescanIntervalS = getRescanInterval(folder.id);
         });
 
-      });
+      });*/
 
     })
     // Figure out if syncthing needs to be updated.
