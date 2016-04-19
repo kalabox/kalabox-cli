@@ -8,7 +8,6 @@ module.exports = function(kbox) {
 
   // Npm modules
   var _ = require('lodash');
-  var moment = require('moment');
   var sha1 = require('sha1');
 
   // Sync modules
@@ -16,11 +15,9 @@ module.exports = function(kbox) {
   var container = require('./share/syncContainer.js')(kbox);
 
   // Kalabox modules
-  var core = kbox.core;
   var engine = kbox.engine;
   var app = kbox.app;
   var Promise = kbox.Promise;
-  var logDebug = core.log.debug;
 
   /*
    * Given an app return true if the app has any containers running.
