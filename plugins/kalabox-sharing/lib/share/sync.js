@@ -154,7 +154,7 @@ module.exports = function(kbox) {
 
     // Run recursive function until it returns or a timeout is reached.
     return rec()
-    .timeout(120 * 1000)
+    .timeout(30 * 1000)
     // Wrap errors.
     .catch(function(err) {
       throw new VError(err,
@@ -352,7 +352,12 @@ module.exports = function(kbox) {
     return self.restart()
     // Wait until it becomes responsive.
     .then(function() {
-      return self.wait();
+      return self.wait()
+      // If wait failed, then we can assume syncthing failed to restart and is
+      // in a stopped state so try to start it again.
+      .catch(function() {
+        return self.start();
+      });
     })
     // Log successful restarting.
     .then(function() {
