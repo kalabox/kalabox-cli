@@ -115,9 +115,10 @@ module.exports = function(kbox) {
     if (process.platform !== 'linux') {
       app.events.on('pre-stop', function() {
         // Run through serializer.
+        app.status('Waiting for code sharing.');
         return serializer.enqueue(function() {
           if (app.config.sharing.share) {
-            kbox.core.log.status('Stopping code sharing.');
+            app.status('Stopping code sharing.');
             // Run through serializer.
             return share.restart();
           }
@@ -213,11 +214,12 @@ module.exports = function(kbox) {
       };
 
       // Run through serializer.
+      app.status('Waiting for code sharing.');
       return serializer.enqueue(function() {
 
         if (app.config.sharing.share) {
 
-          kbox.core.log.status('Sharing code.');
+          app.status('Sharing code.');
 
           // Get the host code root
           var codeRoot = app.config.sharing.codeRoot;
