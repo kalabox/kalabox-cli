@@ -16,3 +16,5 @@ v0.12.0-alpha23
 * Changed syncthing rescan interval to always be 2 seconds. [#1199](https://github.com/kalabox/kalabox/issues/1199)
 
 * Implemented app specific status messages. [#1255](https://github.com/kalabox/kalabox/issues/1255)
+
+* Changed metrics to report email associated with an app if possible. [#44](https://github.com/kalabox/kalabox-internal-issues/issues/44)
