@@ -17,6 +17,4 @@ v0.12.0-alpha23
 
 * Implemented app specific status messages. [#1255](https://github.com/kalabox/kalabox/issues/1255)
 
-* Changed metrics to report email associated with an app if possible. [#44](https://github.com/kalabox/kalabox-internal-issues/issues/44)
-
 * Changed syncthing to try starting if a restart has failed to put it in the up state. This was usually encountered when running multiple app actions in the GUI. [#1228](https://github.com/kalabox/kalabox/issues/1228)
