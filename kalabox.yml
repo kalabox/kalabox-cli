@@ -48,6 +48,7 @@
 #     - kalabox-syncthing
 #     - kalabox-pantheon
 #     - my-wicked-awesome-plugin
+#     - kalabox-ui
 #
 globalPlugins:
   - kalabox-core
@@ -56,6 +57,7 @@ globalPlugins:
   - kalabox-sharing
   - kalabox-pantheon
   - kalabox-php
+  - kalabox-ui
 
 #
 # Console log level
