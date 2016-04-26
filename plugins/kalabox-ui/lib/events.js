@@ -28,7 +28,7 @@ module.exports = function(kbox) {
         internal: true
       }
     };
-  
+
     // Start token container.
     app.events.on('post-start', function() {
       return kbox.engine.start(compose);
@@ -43,7 +43,7 @@ module.exports = function(kbox) {
     app.events.on('post-uninstall', function() {
       return kbox.engine.destroy(compose);
     });
-  
+
   });
 
 };
