@@ -40,7 +40,7 @@ module.exports = function(kbox) {
     });
 
     // Destroy token container.
-    app.events.on('post-uninstall', function() {
+    app.events.on('post-destroy', function() {
       return kbox.engine.destroy(compose);
     });
 
