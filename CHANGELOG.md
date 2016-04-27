@@ -20,3 +20,5 @@ v0.12.0-alpha23
 * Changed syncthing to try starting if a restart has failed to put it in the up state. This was usually encountered when running multiple app actions in the GUI. [#1228](https://github.com/kalabox/kalabox/issues/1228)
 
 * Changed app destroy action to remove the app's directory. [#1232](https://github.com/kalabox/kalabox/issues/1232)
+
+* Added kalabox-ui plugin which manages a token container to enable app state and events via docker events stream. [#1160](https://github.com/kalabox/kalabox/issues/1160)
