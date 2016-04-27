@@ -22,3 +22,5 @@ v0.12.0-alpha23
 * Changed app destroy action to remove the app's directory. [#1232](https://github.com/kalabox/kalabox/issues/1232)
 
 * Added kalabox-ui plugin which manages a token container to enable app state and events via docker events stream. [#1160](https://github.com/kalabox/kalabox/issues/1160)
+
+* Disregard hyphens when checking if an app already exists with app.exists(appName).
