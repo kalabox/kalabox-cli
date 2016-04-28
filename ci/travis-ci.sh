@@ -104,15 +104,15 @@ before-script() {
 #
 script() {
 
-  # Tests
+  # Code Tests
   run_command grunt test:code
-  run_command bin/kbox.js config
-  run_command grunt test
-  run_command grunt docs
 
-  # Do a basic jx build for a very basic test
-  run_command grunt pkg --dev>/dev/null
-  run_command dist/kbox* version
+  # Unit tests
+  run_command grunt test:unit
+
+  # Doc tests
+  run_command grunt test:coverage
+  run_command grunt docs
 
   #
   # Run functional tests if we are on linux
@@ -123,8 +123,13 @@ script() {
     sudo cp ./dist/kbox* /usr/local/bin/kbox
     sudo chmod +x /usr/local/bin/kbox
 
-    # Run all our functional tests
-    run_command grunt test:func
+    # Run our install tests
+    run_command grunt test:install
+
+    # Run the appropriate test suite if we have one set up
+    if [ "$KALABOX_TEST_GROUP" ]; then
+      run_command grunt test:$KALABOX_TEST_GROUP
+    fi
 
   fi
 
@@ -220,6 +225,7 @@ before-deploy() {
 
     # Basic test
     prod_build/kbox-$TRAVIS_OS_NAME-x64-$TRAVIS_TAG version
+
   fi
 
   # Do the build again for our dev releases
@@ -228,16 +234,12 @@ before-deploy() {
   # Rename our build and produce a latest build
   mkdir -p dev_build
 
-  # Get relevant things to rename our build
-  BUILD_HASH=$(git rev-parse --short HEAD)
-  BUILD_VERSION=$(node -pe 'JSON.parse(process.argv[1]).version' "$(cat $TRAVIS_BUILD_DIR/package.json)")
-
   # Rename the builds
-  cp dist/kbox* dev_build/kbox-$TRAVIS_OS_NAME-x64-v$BUILD_VERSION-$BUILD_HASH-dev
+  # cp dist/kbox* dev_build/kbox-$TRAVIS_OS_NAME-x64-v$BUILD_VERSION-$BUILD_HASH-dev
   cp dist/kbox* dev_build/kbox-$TRAVIS_OS_NAME-x64-latest-dev
 
   # Basic tests
-  dev_build/kbox-$TRAVIS_OS_NAME-x64-v$BUILD_VERSION-$BUILD_HASH-dev version
+  # dev_build/kbox-$TRAVIS_OS_NAME-x64-v$BUILD_VERSION-$BUILD_HASH-dev version
   dev_build/kbox-$TRAVIS_OS_NAME-x64-latest-dev version
 
 }

@@ -15,7 +15,7 @@
 
 # Set some defaults if we are LOCAL
 if [ ! $TRAVIS ]; then
-  : ${TRAVIS_BUILD_DIR:=/Users/pirog/Desktop/work/kalabox-cli}
+  : ${TRAVIS_BUILD_DIR:=$(pwd)}
   : ${TRAVIS_COMMIT:=LOCAL}
 fi
 
@@ -44,37 +44,3 @@ if [ -f "$HOME/.kalabox/bin/docker-machine" ]; then
 else
   : ${DOCKER:="/usr/share/kalabox/bin/docker"}
 fi
-
-#
-# Pantheon helpers
-#
-
-#
-# Uncomment to set a local creds
-# It probably makes the most sense to just do this
-#
-# `export PANTHEON_EMAIL=me@thing.com`
-# `export PANTHEON_PASSWORD=*****`
-#
-#: ${PANTHEON_PASSWORD:=changeme}
-: ${PANTHEON_EMAIL:=mike@kalabox.io}
-
-# Drupal7
-: ${PANTHEON_DRUPAL7_NAME=seven}
-: ${PANTHEON_DRUPAL7_SITE=kalabox-drupal7}
-: ${PANTHEON_DRUPAL7_ENV=dev}
-
-# Drupal8
-: ${PANTHEON_DRUPAL8_NAME=eight}
-: ${PANTHEON_DRUPAL8_SITE=kalabox-drupal8}
-: ${PANTHEON_DRUPAL8_ENV=dev}
-
-# Backdrop
-: ${PANTHEON_BACKDROP_NAME=backdrop}
-: ${PANTHEON_BACKDROP_SITE=kalabox-backdrop}
-: ${PANTHEON_BACKDROP_ENV=dev}
-
-# Wordpress
-: ${PANTHEON_WORDPRESS_NAME=wordpress}
-: ${PANTHEON_WORDPRESS_SITE=kalabox-wordpress}
-: ${PANTHEON_WORDPRESS_ENV=dev}

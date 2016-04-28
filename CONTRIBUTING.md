@@ -136,7 +136,11 @@ and chai. The functional testing uses bats (bash file testing).
 
 Run code linting, unit, and unit coverage tests:
 
-`grunt test`
+```
+grunt test:code
+grunt test:unit
+grunt test:coverage
+```
 
 Run functional tests:
 
@@ -154,6 +158,8 @@ but if you're looking for more tips, we recommend:
 - [Mocha documentation](http://mochajs.org/)
 - [Chai documentation](http://chaijs.com/)
 - [Chai-As-Promised documentation](http://chaijs.com/plugins/chai-as-promised/)
+- [BATS wiki](https://github.com/sstephenson/bats)
+- [BATS tutorial](https://blog.engineyard.com/2014/bats-test-command-line-tools)
 
 Submitting Fixes
 ----------------

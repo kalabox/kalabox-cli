@@ -5,6 +5,8 @@ v0.12.0-alpha23
 
 #### Enhancements
 
+* Added `python`, `make` and `g++` to the `kalabox\cli` image. [#1263](https://github.com/kalabox/kalabox/issues/1263)
+
 #### New Features
 
 * Updated our development process with new contribution guidelines and standards [#1236](https://github.com/kalabox/kalabox/issues/1236)

@@ -1,8 +1,11 @@
 language: cpp
 sudo: required
-os:
-- linux
-- osx
+matrix:
+  include:
+  - os: linux
+  - os: linux
+    env: KALABOX_TEST_GROUP=cmd
+  - os: osx
 before_install:
 - cp ci/travis-ci.sh $HOME/
 - chmod +x $HOME/travis-ci.sh
