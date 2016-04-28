@@ -64,7 +64,7 @@ build_script:
   - mkdir dev_build
   #- copy "dist\kbox-win32-x64-v%KALABOX_VERSION%.exe" "dev_build\kbox-win-x64-v%KALABOX_VERSION%-%KALABOX_HASH%-dev.exe"
   - copy "dist\kbox-win32-x64-v%KALABOX_VERSION%.exe" "dev_build\kbox-win-x64-latest-dev.exe"
-  - cmd: "dev_build\\kbox-win-x64-v%KALABOX_VERSION%-%KALABOX_HASH%-dev version"
+  #- cmd: "dev_build\\kbox-win-x64-v%KALABOX_VERSION%-%KALABOX_HASH%-dev version"
   - cmd: "dev_build\\kbox-win-x64-latest-dev version"
 
   # Build prod releases
