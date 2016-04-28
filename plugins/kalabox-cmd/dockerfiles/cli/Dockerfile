@@ -10,6 +10,9 @@ RUN \
   rsync \
   openssh \
   wget \
+  python \
+  make \
+  g++ \
   curl \
   bash && \
   npm install --production -g grunt-cli gulp-cli bower && \
