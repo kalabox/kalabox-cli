@@ -126,8 +126,10 @@ script() {
     # Run our install tests
     run_command grunt test:install
 
-    # Run the appropriate test suite
-    run_command grunt test:$KALABOX_TEST_GROUP
+    # Run the appropriate test suite if we have one set up
+    if [ "$KALABOX_TEST_GROUP" ]; then
+      run_command grunt test:$KALABOX_TEST_GROUP
+    fi
 
   fi
 
