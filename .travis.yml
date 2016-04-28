@@ -3,6 +3,7 @@ sudo: required
 matrix:
   include:
   - os: linux
+  - os: linux
     env: KALABOX_TEST_GROUP=cmd
   - os: osx
 before_install:

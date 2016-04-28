@@ -232,10 +232,6 @@ before-deploy() {
   # Rename our build and produce a latest build
   mkdir -p dev_build
 
-  # Get relevant things to rename our build
-  BUILD_HASH=$(git rev-parse --short HEAD)
-  BUILD_VERSION=$(node -pe 'JSON.parse(process.argv[1]).version' "$(cat $TRAVIS_BUILD_DIR/package.json)")
-
   # Rename the builds
   # cp dist/kbox* dev_build/kbox-$TRAVIS_OS_NAME-x64-v$BUILD_VERSION-$BUILD_HASH-dev
   cp dist/kbox* dev_build/kbox-$TRAVIS_OS_NAME-x64-latest-dev

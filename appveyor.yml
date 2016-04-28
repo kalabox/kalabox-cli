@@ -53,8 +53,7 @@ test_script:
 
   # Run basic tests
   - grunt test:code
-  - node bin\\kbox.js config
-  - grunt test
+  - grunt test:unit
 
 # Custom build script
 build_script:
