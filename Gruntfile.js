@@ -216,9 +216,13 @@ module.exports = function(grunt) {
         command: docLintCmd
       },
       // Shell tasks for functional testing
-      func: {
+      install: {
         options: funcOpts,
-        command: funcCommand + ' ./test/*.bats'
+        command: funcCommand + ' ./test/install.bats'
+      },
+      cmd: {
+        options: funcOpts,
+        command: funcCommand + ' ./test/kalabox-cmd.bats'
       }
     },
 
@@ -284,6 +288,9 @@ module.exports = function(grunt) {
   // SETUP WORKFLOWS
   //--------------------------------------------------------------------------
 
+  /*
+   * Code tests
+   */
   // Run just unit tests
   grunt.registerTask('test:unit', [
     'mochacli:unit'
@@ -294,27 +301,35 @@ module.exports = function(grunt) {
     'mocha_istanbul:coverage'
   ]);
 
-  // Generate documentation
-  grunt.registerTask('docs', [
-    'shell:doclint',
-    'shell:docgen'
-  ]);
-
   // Run just code styles
   grunt.registerTask('test:code', [
     'jshint',
     'jscs'
   ]);
 
-  grunt.registerTask('test:func', [
-    'shell:func'
+  /*
+   * Func tests
+   */
+  // Install verify tests
+  grunt.registerTask('test:install', [
+    'shell:install'
   ]);
 
-  // Run all the tests
-  grunt.registerTask('test', [
-    'test:code',
-    'test:unit',
-    'test:coverage'
+  // kalabox-cmd tests
+  grunt.registerTask('test:cmd', [
+    'shell:cmd'
+  ]);
+
+  // All functional tests
+  grunt.registerTask('test:func', [
+    'test:install',
+    'test:cmd'
+  ]);
+
+  // Generate documentation
+  grunt.registerTask('docs', [
+    'shell:doclint',
+    'shell:docgen'
   ]);
 
   // Bump our minor version

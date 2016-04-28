@@ -56,17 +56,13 @@ test_script:
   - node bin\\kbox.js config
   - grunt test
 
-  # Do a basic jx build for a very basic test
-  - grunt pkg --dev
-  - cmd: "dist\\kbox-win32-x64-v%KALABOX_VERSION%.exe version"
-
 # Custom build script
 build_script:
 
   # Build dev releases
   - grunt pkg --dev
   - mkdir dev_build
-  - copy "dist\kbox-win32-x64-v%KALABOX_VERSION%.exe" "dev_build\kbox-win-x64-v%KALABOX_VERSION%-%KALABOX_HASH%-dev.exe"
+  #- copy "dist\kbox-win32-x64-v%KALABOX_VERSION%.exe" "dev_build\kbox-win-x64-v%KALABOX_VERSION%-%KALABOX_HASH%-dev.exe"
   - copy "dist\kbox-win32-x64-v%KALABOX_VERSION%.exe" "dev_build\kbox-win-x64-latest-dev.exe"
   - cmd: "dev_build\\kbox-win-x64-v%KALABOX_VERSION%-%KALABOX_HASH%-dev version"
   - cmd: "dev_build\\kbox-win-x64-latest-dev version"
