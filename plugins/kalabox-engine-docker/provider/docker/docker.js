@@ -455,7 +455,13 @@ module.exports = function(kbox) {
     // Get stream of docker events.
     .then(function(dockerInstance) {
       return Promise.fromNode(function(cb) {
-        dockerInstance.getEvents(cb);
+        // Include since option with a really old timestamp to ensure we get
+        // all events since engine was started. This is useful when an app
+        // was started with the cli, before the GUI was initialized.
+        var opts = {
+          since: 1300000000
+        };
+        dockerInstance.getEvents(opts, cb);
       });
     })
     // Wrap errors.

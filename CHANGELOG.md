@@ -26,3 +26,5 @@ v0.12.0-alpha23
 * Added kalabox-ui plugin which manages a token container to enable app state and events via docker events stream. [#1160](https://github.com/kalabox/kalabox/issues/1160)
 
 * Disregard hyphens when checking if an app already exists with app.exists(appName).
+
+* Changed docker events query to include all events since docker was started. [#1290](https://github.com/kalabox/kalabox/issues/1290)
