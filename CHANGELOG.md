@@ -1,4 +1,4 @@
-v0.12.0-alpha25
+v0.12.0-beta
 ===============
 
 ### New Features
