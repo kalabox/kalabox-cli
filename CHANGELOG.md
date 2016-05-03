@@ -1,7 +1,15 @@
-v0.12.0-alpha23
-==================
+v0.12.0-beta1
+=============
 
-#### Breaking changes
+### New Features
+
+### Bug Fixes
+
+* Updated the `kbox destroy` confirmation warning to accurately reflect what `kbox destroy` does. [#1288](https://github.com/kalabox/kalabox/issues/1288)
+
+
+v0.12.0-alpha24
+===============
 
 #### Enhancements
 
@@ -21,3 +29,9 @@ v0.12.0-alpha23
 * Added kalabox-ui plugin which manages a token container to enable app state and events via docker events stream. [#1160](https://github.com/kalabox/kalabox/issues/1160)
 * Disregard hyphens when checking if an app already exists with app.exists(appName).
 * Changed docker events query to include all events since docker was started. [#1290](https://github.com/kalabox/kalabox/issues/1290)
+* Fixed testing to use new `cgroup-bin` pkg instead of `cgroup-lite`
+
+#### App updates
+
+* See https://github.com/kalabox/kalabox-app-pantheon/releases
+* See https://github.com/kalabox/kalabox-app-php/releases
