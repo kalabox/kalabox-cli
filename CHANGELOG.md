@@ -30,6 +30,7 @@ v0.12.0-alpha24
 * Disregard hyphens when checking if an app already exists with app.exists(appName).
 * Changed docker events query to include all events since docker was started. [#1290](https://github.com/kalabox/kalabox/issues/1290)
 * Fixed testing to use new `cgroup-bin` pkg instead of `cgroup-lite`
+* Changed kbox.app.get to match on appName or appName with hyphens removed. [#1306](https://github.com/kalabox/kalabox/issues/1306)
 
 #### App updates
 
