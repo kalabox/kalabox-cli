@@ -6,7 +6,8 @@ v0.12.0-beta1
 ### Bug Fixes
 
 * Updated the `kbox destroy` confirmation warning to accurately reflect what `kbox destroy` does. [#1288](https://github.com/kalabox/kalabox/issues/1288)
-
+* Changed kbox.app.get to match on appName or appName with hyphens removed. [#1306](https://github.com/kalabox/kalabox/issues/1306)
+* Removed code no longer needed that was resulting in duplicate 'Pulling image <image_name>' messages in the cli. [#1285](https://github.com/kalabox/kalabox/issues/1285)
 
 v0.12.0-alpha24
 ===============
