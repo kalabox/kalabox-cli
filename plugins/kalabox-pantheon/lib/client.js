@@ -74,6 +74,10 @@ Client.prototype.getSessionFiles = function() {
 
   var self = this;
   var files = fs.readdirSync(this.cacheDir);
+  // Filter out files that aren't valid emails.
+  files = _.filter(files, function(filename) {
+    return _.contains(filename, '@');
+  });
   var sessions = [];
 
   // Try to load all our session files
