@@ -31,6 +31,8 @@ v0.12.0-alpha24
 * Disregard hyphens when checking if an app already exists with app.exists(appName).
 * Changed docker events query to include all events since docker was started. [#1290](https://github.com/kalabox/kalabox/issues/1290)
 * Fixed testing to use new `cgroup-bin` pkg instead of `cgroup-lite`
+* Removing code no longer needed that was resulting in duplicate 'Pulling image <image_name>' messages in the cli. [#1285](https://github.com/kalabox/kalabox/issues/1285)
+* Filtering out pantheon session files that aren't valid email addresses. [#1270](https://github.com/kalabox/kalabox/issues/1270)
 
 #### App updates
 
