@@ -37,14 +37,37 @@ module.exports = function(kbox) {
   });
 
   /*
-   * Mix in our with default syncthing config and set into the app
+   * Turn off the local sycnthing when the engine goes down
+   * this is only relevant on non-linux
+   */
+  if (process.platform !== 'linux') {
+    kbox.core.events.on('pre-engine-down', function() {
+      // Run through serializer.
+      return serializer.enqueue(function() {
+        // Get local sync instance
+        return share.getLocalSync()
+        .then(function(localSync) {
+          // Check if it's up
+          return localSync.isUp()
+          .then(function(isUp) {
+            if (isUp) {
+              // If it's up, then shut'er down.
+              return localSync.shutdown();
+            }
+          });
+        });
+      });
+    });
+  }
+
+  /*
+   * App events
    */
   kbox.core.events.on('post-app-load', function(app) {
 
     // Our default syncthing configuration
     var defaultConfig = kbox.core.config.normalize({
       codeDir: 'code',
-      codeRoot: path.join(app.root, ':codeDir:'),
       ignore: [
         '*.7z',
         '*.bz2',
@@ -73,40 +96,12 @@ module.exports = function(kbox) {
       config = _.merge(config, app.config.pluginconfig.sharing);
     }
 
+    // Set the codeRoot
+    config.codeRoot = path.join(app.root, config.codeDir);
+
     // Set the official syncthning config and remove the old one
     app.config.sharing = config;
     delete app.config.pluginconfig.sharing;
-
-  });
-
-  /*
-   * Turn off the local sycnthing when the engine goes down
-   * this is only relevant on non-linux
-   */
-  if (process.platform !== 'linux') {
-    kbox.core.events.on('pre-engine-down', function() {
-      // Run through serializer.
-      return serializer.enqueue(function() {
-        // Get local sync instance
-        return share.getLocalSync()
-        .then(function(localSync) {
-          // Check if it's up
-          return localSync.isUp()
-          .then(function(isUp) {
-            if (isUp) {
-              // If it's up, then shut'er down.
-              return localSync.shutdown();
-            }
-          });
-        });
-      });
-    });
-  }
-
-  /*
-   * App events
-   */
-  kbox.core.events.on('post-app-load', function(app) {
 
     /*
      * Restart our shares

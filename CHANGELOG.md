@@ -1,3 +1,10 @@
+v0.12.0-beta2
+=============
+
+### Bug Fixes
+
+* Fixed sharing plugin so that a user can now specify a custom `codeDir` in their `kalabox.yml` [#352](https://github.com/kalabox/kalabox/issues/352)
+
 v0.12.0-beta1
 =============
 
