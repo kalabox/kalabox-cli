@@ -52,11 +52,11 @@
 #
 globalPlugins:
   - kalabox-app-pantheon
+  - kalabox-app-php
   - kalabox-core
   - kalabox-cmd
   - kalabox-services-kalabox
   - kalabox-sharing
-  - kalabox-php
   - kalabox-ui
 
 #
