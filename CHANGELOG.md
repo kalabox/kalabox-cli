@@ -1,7 +1,12 @@
-v0.12.0-beta1
+v0.12.0-beta2
 =============
 
-### New Features
+#### Bug Fixes
+
+* Removed internal `kalabox-pantheon` and `kalabox-php` plugins in favor of newly-consolidated `kalabox-app-pantheon` and `kalabox-app-php` plugins. [#1223](https://github.com/kalabox/kalabox/issues/1223)
+
+v0.12.0-beta1
+=============
 
 ### Bug Fixes
 
