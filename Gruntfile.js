@@ -44,7 +44,6 @@ module.exports = function(grunt) {
   var jxSlimPatterns = [
     '*.spec',
     '*test/*',
-    '*kalabox-app-*/*',
     '.git/*'
   ];
   var jxCmd = [
@@ -52,7 +51,7 @@ module.exports = function(grunt) {
     'bin/kbox.js',
     'dist/' + binName,
     '--add "' + jxAddPatterns.join(',') + '"',
-    '--slime "' + jxSlimPatterns.join(',') + '"',
+    '--slim "' + jxSlimPatterns.join(',') + '"',
     '--native'
   ];
   var installCmd = ['npm', 'install', '--production'];
@@ -229,19 +228,11 @@ module.exports = function(grunt) {
     // This handles automatic version bumping in travis
     bump: {
       options: {
-        files: [
-          'package.json',
-          'plugins/kalabox-php/lib/config.json',
-          'plugins/kalabox-pantheon/lib/config.json'
-        ],
+        files: ['package.json'],
         updateConfigs: [],
         commit: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: [
-          'package.json',
-          'plugins/kalabox-php/lib/config.json',
-          'plugins/kalabox-pantheon/lib/config.json'
-        ],
+        commitFiles: ['package.json'],
         createTag: true,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',

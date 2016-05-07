@@ -1,14 +1,12 @@
 v0.12.0-beta2
 =============
 
-### Bug Fixes
+#### Bug Fixes
 
-* Fixed sharing plugin so that a user can now specify a custom `codeDir` in their `kalabox.yml` [#352](https://github.com/kalabox/kalabox/issues/352)
+* Removed internal `kalabox-pantheon` and `kalabox-php` plugins in favor of newly-consolidated `kalabox-app-pantheon` and `kalabox-app-php` plugins. [#1223](https://github.com/kalabox/kalabox/issues/1223)
 
 v0.12.0-beta1
 =============
-
-### New Features
 
 ### Bug Fixes
 
