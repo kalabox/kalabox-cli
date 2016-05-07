@@ -51,11 +51,11 @@
 #     - kalabox-ui
 #
 globalPlugins:
+  - kalabox-app-pantheon
   - kalabox-core
   - kalabox-cmd
   - kalabox-services-kalabox
   - kalabox-sharing
-  - kalabox-pantheon
   - kalabox-php
   - kalabox-ui
 
