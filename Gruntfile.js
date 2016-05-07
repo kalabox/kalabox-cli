@@ -44,7 +44,6 @@ module.exports = function(grunt) {
   var jxSlimPatterns = [
     '*.spec',
     '*test/*',
-    '*kalabox-app-*/*',
     '.git/*'
   ];
   var jxCmd = [
@@ -52,7 +51,7 @@ module.exports = function(grunt) {
     'bin/kbox.js',
     'dist/' + binName,
     '--add "' + jxAddPatterns.join(',') + '"',
-    '--slime "' + jxSlimPatterns.join(',') + '"',
+    '--slim "' + jxSlimPatterns.join(',') + '"',
     '--native'
   ];
   var installCmd = ['npm', 'install', '--production'];
