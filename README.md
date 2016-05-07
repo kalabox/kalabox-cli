@@ -1,17 +1,16 @@
 # Kalabox CLI
 
 This is the CLI component to the Kalabox. By itself it doesn't do much of
-anything. The easiest way to get it right now is to request an access code at
-http://kalabox.io. That said we will soon be releasing manual install scripts.
-So check back in a bit!
+anything. The easiest way to get it right now is to download the installer
+at http://kalabox.io/download.
 
 ## Installation
 
-Go to kalabox.io and request an access code!
+Go to http://kalabox.io/download and download the installer.
 
 ## More info
 
-Check out the [Kalabox wiki](https://github.com/kalabox/kalabox/wiki) for more info on various things.
+Check out the [Kalabox Knowledgebase](http://support.kalabox.io/solution/categories) for more info on various things.
 
 ## Other Resources
 
