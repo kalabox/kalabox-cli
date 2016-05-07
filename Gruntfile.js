@@ -229,19 +229,11 @@ module.exports = function(grunt) {
     // This handles automatic version bumping in travis
     bump: {
       options: {
-        files: [
-          'package.json',
-          'plugins/kalabox-php/lib/config.json',
-          'plugins/kalabox-pantheon/lib/config.json'
-        ],
+        files: ['package.json'],
         updateConfigs: [],
         commit: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: [
-          'package.json',
-          'plugins/kalabox-php/lib/config.json',
-          'plugins/kalabox-pantheon/lib/config.json'
-        ],
+        commitFiles: ['package.json'],
         createTag: true,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
