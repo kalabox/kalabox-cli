@@ -1,0 +1,6 @@
+dir: lib
+branches:
+  - 1322-apiDocsReboot
+packageJson: package.json
+articles:
+  - Overview: README.md
