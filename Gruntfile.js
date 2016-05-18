@@ -79,16 +79,6 @@ module.exports = function(grunt) {
     buildCmds.push('sleep 2');
   }
 
-  // Documentation helpers
-  var docBin = 'node_modules/.bin/documentation';
-  var docOpts = [
-    'build',
-    '--output=docs',
-    '--format=html'
-  ];
-  var docBuildCmd = [docBin, docOpts.join(' ')].join(' ');
-  var docLintCmd = [docBin, 'lint'].join(' ');
-
   // Functional testing helpers
   var funcOpts = {execOptions: {maxBuffer: 20 * 1024 * 1024}};
   var funcCommand = 'node_modules/bats/libexec/bats ${CI:+--tap}';
@@ -161,7 +151,7 @@ module.exports = function(grunt) {
       unit: ['./test/*.spec.js', './test/**/*.spec.js']
     },
 
-    // Chech coverage and things
+    // Check coverage and things
     /* jshint ignore:start */
     // jscs:disable
     mocha_istanbul: {
@@ -176,8 +166,7 @@ module.exports = function(grunt) {
             branches: 5,
             functions: 5
           },
-          root: './lib',
-          reportFormats: ['lcov','html']
+          root: './lib'
         }
       }
     },
@@ -195,24 +184,6 @@ module.exports = function(grunt) {
           }
         },
         command: buildCmds.join(' && ')
-      },
-      // Shell tasks for document generation
-      docgen: {
-        options: {
-          execOptions: {
-            maxBuffer: 20 * 1024 * 1024
-          }
-        },
-        command: docBuildCmd
-      },
-      // Shell tasks for linting
-      doclint: {
-        options: {
-          execOptions: {
-            maxBuffer: 20 * 1024 * 1024
-          }
-        },
-        command: docLintCmd
       },
       // Shell tasks for functional testing
       install: {
@@ -315,12 +286,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test:func', [
     'test:install',
     'test:cmd'
-  ]);
-
-  // Generate documentation
-  grunt.registerTask('docs', [
-    'shell:doclint',
-    'shell:docgen'
   ]);
 
   // Bump our minor version
